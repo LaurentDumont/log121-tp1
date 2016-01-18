@@ -1,0 +1,121 @@
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import javax.swing.JOptionPane;
+
+/*******************************
+ * Cours : LOG121
+ * Session : Hiver 2016
+ * Groupe : 01
+ * Projet : Travail Pratique 1
+ * Étudiant(e)(s) : Laurent Dumont
+ * Code(s) perm. : DUML04059004
+ * Chargé de cours : 
+ * Chargé de labo :
+ * Nom du fichier : ConnexionServeur.java
+ * Date créé : 2016-01-10
+ * Date dern. modif. : 2016-01-10
+ *******************************
+ * Historique de modifications
+ *******************************
+ * 2016-01-10		Version Initiale
+ *******************************
+ /**
+ * @author Laurent Dumont
+ * @date 2016/01/10
+ */
+
+public class ConnexionServeur {
+	
+	private static Socket MonClient;
+	private static PrintWriter envoieServeur = null;
+	private static BufferedReader réponseServeur = null;
+	private static String requeteForme = "GET";
+	private static int retry;
+	
+	/**
+	 * Permet la connexion au serveur  
+	 * 
+	 * @param hostname Le nom d'hôte du serveur applicatif.
+	 * @param port Le port de du serveur applicatif. Port par défaut = 10000
+
+	 */
+	
+	public static void connexionServeur(String hostname,int port){
+		
+		//Conexion au Serveur
+		try{
+			MonClient = new Socket(hostname, port); //Création d'un nouveau socket
+			envoieServeur = new PrintWriter(MonClient.getOutputStream(), true);
+			réponseServeur = new BufferedReader(new InputStreamReader(MonClient.getInputStream()));
+			
+		} catch (UnknownHostException e) { //Avertir l'utilisateur lorsque le nom d'hôte est introuvable.
+		      System.err.println("Le nom d'hôte "+ hostname + " est introuvable avec le serveur ");
+		      JOptionPane.showMessageDialog(null,"Le nom d'hôte: " + hostname + "est introuvable");
+		      retry = JOptionPane.showConfirmDialog(null,
+		    		  "Le nom d'hôte "+ hostname + "est introuvable. Voulez-vous réessayer avec un autre serveur ?", "Oui ou Non?",
+                      JOptionPane.YES_NO_OPTION);
+		      
+		      if(retry == 0)nouveauServeur(); //Demande un nouveau serveur
+		      
+		    } catch (IOException e) { //Avertir lorsque le serveur ne répond pas sur le port spécifié par l'utilisateur.
+		      System.err.println("Le serveur ne semble pas être lancé sur le port" + port);
+		      retry = JOptionPane.showConfirmDialog(null,
+                      "Le serveur n'est pas démarré sur l'adresse suivante: "+ hostname + port + " Voulez-vous réessayer avec un autre serveur ?", "Oui ou Non?",
+                      JOptionPane.YES_NO_OPTION);
+		      
+		      if(retry == 0)nouveauServeur();//Demande un nouveau serveur
+		      }
+	}
+	
+	/**
+	 * 
+	 * 
+	 * 
+	 */
+	
+	private static void nouveauServeur() {
+		String chaîneServeur = JOptionPane.showInputDialog
+				("Veuillez entrer l'adresse ainsi que le port du serveur","localhost:10000");
+		String [] serveur = chaîneServeur.split(":"); //Sépare la saisie de l'utilisateur en 2 partie afin de récupérer le nom d'hôte et le port
+		String hostname = serveur[0]; //Assigne le hostname
+		int port = Integer.parseInt(serveur[1]); //Assigne le port
+		
+		connexionServeur(hostname,port);
+		
+	}
+	
+	/**
+	 * Requête "END" au serveur afin de mettre fin à la connexion.
+	 */
+	public static void deconnexionServeur() {
+		
+		try {
+			envoieServeur = new PrintWriter(MonClient.getOutputStream(), true);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		envoieServeur.println("END");
+			
+	}
+	/**
+	 * Fonction permettant d'envoyer le commande "GET" au serveur pour générer des formes.
+	 * 
+	 * @return Chaîne de caractères représentants la forme générée par le serveur.
+	 * @throws IOException
+	 */
+	
+	public static String getForme() throws IOException {
+		String forme;
+		envoieServeur.println(requeteForme);//Demande au server une nouvelle forme
+		réponseServeur.readLine(); //Lecture de la commande envoyé par le serveur
+		forme = réponseServeur.readLine();
+		
+		return forme;
+	}
+}
