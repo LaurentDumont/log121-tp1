@@ -2,7 +2,7 @@ package Forme;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class Square {
+public class Square extends Forme {
 	private int x1, y1, x2, y2;
 	private Graphics2D g;
 

@@ -1,3 +1,4 @@
+package main_package;
 /******************************************************
 Cours:  LOG121
 Projet: Squelette du laboratoire #1
