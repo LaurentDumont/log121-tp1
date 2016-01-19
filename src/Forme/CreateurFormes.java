@@ -4,14 +4,14 @@ import main_package.Decoder;
 
 public class CreateurFormes {
 
-	public Forme creerForme(String chaineForme) {
+	public static Forme creerForme(String chaineForme) {
 		Decoder code = new Decoder(chaineForme);
 
 		if (code.getForme().equals("LIGNE")) {
 			return new Line(code.getData1(), code.getData2(), code.getData3(), code.getData4());
 		}
 
-		else if (code.getForme().equals("CARREE")) {
+		else if (code.getForme().equals("CARRE")) {
 			return new Square(code.getData1(), code.getData2(), code.getData3(), code.getData4());
 		}
 
@@ -23,7 +23,7 @@ public class CreateurFormes {
 			return new Oval(code.getData1(), code.getData2(), code.getData3(), code.getData4());
 		}
 
-		else if (code.getForme().equals("Circle")) {
+		else if (code.getForme().equals("CERCLE")) {
 			return new Circle(code.getData1(), code.getData2(), code.getData3());
 		} else
 			return null;
