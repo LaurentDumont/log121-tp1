@@ -37,12 +37,16 @@ public class FenetreFormes extends JComponent {
 	public Forme forme1;
 	public Forme forme2;
 	public Forme forme3;
+	
+	private Forme forme[];
+	private int nbforme;
 
 	/**
 	 * Constructeur
 	 */
 	public FenetreFormes() {
-		// ...
+		forme = new Forme[9];
+		nbforme = 0;
 	}
 
 	/*
@@ -50,14 +54,9 @@ public class FenetreFormes extends JComponent {
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
-		forme1 = CreateurFormes.creerForme(test1);
-		forme1.draw(g);
-
-		forme2 = CreateurFormes.creerForme(test2);
-		forme2.draw(g);
-		
-		forme3 = CreateurFormes.creerForme(test3);
-		forme3.draw(g);
+		for(int i = 0; i < forme.length; i++){
+			
+		}
 
 	}
 
