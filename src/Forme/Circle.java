@@ -1,11 +1,11 @@
 package Forme;
 import java.awt.Color;
-import java.awt.Graphics2D;
+import java.awt.Graphics;
 
 public class Circle extends Forme {
 	
 	private int radius, centreX, centreY;
-	private Graphics2D g;
+	private Graphics g;
 
 	public Circle( int centreX, int centreY, int radius ) {
 		this.centreX = centreX;
@@ -13,10 +13,10 @@ public class Circle extends Forme {
 		this.radius = radius;
 	}
 
-	public void draw(Graphics2D g) {
-		
-		g.drawOval(centreX, centreY, radius, radius);
+	public void draw(Graphics g) {
 		g.setColor(Color.CYAN);
+		g.fillOval(centreX, centreY, radius, radius);
+		
 	}
 	
 	
