@@ -18,6 +18,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+
+import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -27,6 +29,9 @@ import java.net.UnknownHostException;
  */
 public class CommBase {
 	
+	private String stringServeur = null;
+	private String nomServeur = null;
+	private int portServeur = 0;
 	private final int DELAI = 1000;
 	private SwingWorker threadComm =null;
 	private PropertyChangeListener listener = null;
@@ -50,6 +55,13 @@ public class CommBase {
 	 * DÃ©marre la communication
 	 */
 	public void start(){
+		stringServeur = JOptionPane.showInputDialog
+				("Veuillez entrer l'adresse ainsi que le port du serveur","localhost:10000");
+		String [] serveur = stringServeur.split(":"); //Sépare la saisie de l'utilisateur en 2 partie afin de récupérer le nom d'hôte et le port
+		nomServeur = serveur[0]; //Assigne le hostname
+		portServeur = Integer.parseInt(serveur[1]); //Assigne le port
+		ConnexionServeur.connexionServeur(nomServeur,portServeur); //Lance la connexion avec le serveur
+		isActif = true;
 		creerCommunication();
 	}
 	
@@ -73,6 +85,7 @@ public class CommBase {
 				System.out.println("Le fils d'execution parallele est lance");
 				while(true){
 					Thread.sleep(DELAI);
+					
  					//La mÃ©thode suivante alerte l'observateur 
 					if(listener!=null)
 					   firePropertyChange("ENVOIE-TEST", null, (Object) "."); 
