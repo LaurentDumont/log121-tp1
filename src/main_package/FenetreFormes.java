@@ -31,22 +31,24 @@ public class FenetreFormes extends JComponent {
 	public static final int WIDTH = 500;
 	public static final int HEIGHT = 500;
 	public static final Dimension dimension = new Dimension(500, 500);
+	private Forme formetab[];
+	private int indexForme;
+	/*
 	public String test1 = "45056 <LIGNE> 234 164 409 331 </LIGNE>";
 	public String test2 = "61442 <CARRE> 195 332 210 347 </CARRE>";
 	public String test3 = "57347 <RECTANGLE> 397 309 489 364 </RECTANGLE>";
 	public Forme forme1;
 	public Forme forme2;
 	public Forme forme3;
+	*/
 	
-	private Forme forme[];
-	private int nbforme;
 
 	/**
 	 * Constructeur
 	 */
 	public FenetreFormes() {
-		forme = new Forme[9];
-		nbforme = 0;
+		formetab = new Forme[10];
+		indexForme = 0;
 	}
 
 	/*
@@ -54,10 +56,21 @@ public class FenetreFormes extends JComponent {
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
-		for(int i = 0; i < forme.length; i++){
-			
+		for(int i = 0; i < formetab.length; i++){
+			if(formetab[i] != null){
+				formetab[i].draw(g);
+				
+			}
 		}
 
+	}
+	public void addForme(Forme forme) {
+		if(indexForme > 9){
+			indexForme = 0;
+		}
+		formetab[indexForme] = forme;
+		indexForme++;
+		this.repaint();
 	}
 
 	/*

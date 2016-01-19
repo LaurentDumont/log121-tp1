@@ -4,7 +4,7 @@ import main_package.Decoder;
 
 public class CreateurFormes {
 
-	public static Forme creerForme(String chaineForme) {
+	public Forme creerForme(String chaineForme) {
 		Decoder code = new Decoder(chaineForme);
 
 		if (code.getForme().equals("LIGNE")) {
