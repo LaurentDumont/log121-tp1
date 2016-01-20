@@ -18,6 +18,7 @@ public class Decoder {
 	}
 
 	public void DataDecoder() {
+		
 		// compilateur pour déterminer la forme que prendre la donnée du serveur
 		Pattern p = Pattern.compile("(\\d)+\\s<(.*)>(\\s(\\d)+)+");
 

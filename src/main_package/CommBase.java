@@ -9,101 +9,119 @@ Historique des modifications
 *******************************************************
 *@author Patrice Boucher
 2013-05-03 Version initiale
-*******************************************************/  
+*******************************************************/
 
 import java.beans.PropertyChangeListener;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
-import java.net.Socket;
-import java.net.UnknownHostException;
+
+import Forme.CreateurFormes;
+import Forme.Forme;
 
 /**
  * Base d'une communication via un fil d'ex√©cution parall√®le.
  */
 public class CommBase {
-	
+
 	private String stringServeur = null;
 	private String nomServeur = null;
 	private int portServeur = 0;
 	private final int DELAI = 1000;
-	private SwingWorker threadComm =null;
+	private SwingWorker threadComm = null;
 	private PropertyChangeListener listener = null;
 	private boolean isActif = false;
-	
+	private CreateurFormes createurForme;
+
 	/**
 	 * Constructeur
 	 */
-	public CommBase(){
+	public CommBase() {
 	}
-	
+
 	/**
-	 * DÈfinir le rÈcepteur de l'information reÁue dans la communication avec le serveur
-	 * @param listener sera alert√© lors de l'appel de "firePropertyChanger" par le SwingWorker
+	 * DÈfinir le rÈcepteur de l'information reÁue dans la communication avec le
+	 * serveur
+	 * 
+	 * @param listener
+	 *            sera alert√© lors de l'appel de "firePropertyChanger" par le
+	 *            SwingWorker
 	 */
-	public void setPropertyChangeListener(PropertyChangeListener listener){
+	public void setPropertyChangeListener(PropertyChangeListener listener) {
 		this.listener = listener;
 	}
-	
+
 	/**
 	 * D√©marre la communication
 	 */
-	public void start(){
-		stringServeur = JOptionPane.showInputDialog
-				("Veuillez entrer l'adresse ainsi que le port du serveur","localhost:10000");
-		String [] serveur = stringServeur.split(":"); //SÈpare la saisie de l'utilisateur en 2 partie afin de rÈcupÈrer le nom d'hÙte et le port
-		nomServeur = serveur[0]; //Assigne le hostname
-		portServeur = Integer.parseInt(serveur[1]); //Assigne le port
-		ConnexionServeur.connexionServeur(nomServeur,portServeur); //Lance la connexion avec le serveur
+	public void start() {
+		stringServeur = JOptionPane.showInputDialog("Veuillez entrer l'adresse ainsi que le port du serveur",
+				"localhost:10000");
+		String[] serveur = stringServeur.split(":"); // SÈpare la saisie de
+														// l'utilisateur en 2
+														// partie afin de
+														// rÈcupÈrer le nom
+														// d'hÙte et le port
+		nomServeur = serveur[0]; // Assigne le hostname
+		portServeur = Integer.parseInt(serveur[1]); // Assigne le port
+		ConnexionServeur.connexionServeur(nomServeur, portServeur); // Lance la
+																	// connexion
+																	// avec le
+																	// serveur
 		isActif = true;
 		creerCommunication();
 	}
-	
+
 	/**
 	 * Arr√™te la communication
 	 */
-	public void stop(){
-		if(threadComm!=null)
-			threadComm.cancel(true); 
+	public void stop() {
+		if (threadComm != null)
+			threadComm.cancel(true);
 		isActif = false;
 	}
-	
+
 	/**
 	 * Cr√©er le n√©cessaire pour la communication avec le serveur
 	 */
-	protected void creerCommunication(){		
+	protected void creerCommunication() {
 		// Cr√©e un fil d'ex√©cusion parall√®le au fil courant,
-		threadComm = new SwingWorker(){
+		threadComm = new SwingWorker() {
 			@Override
 			protected Object doInBackground() throws Exception {
 				System.out.println("Le fils d'execution parallele est lance");
-				while(true){
+				while (true) {
 					Thread.sleep(DELAI);
-					
- 					//La m√©thode suivante alerte l'observateur 
-					if(listener!=null)
-					   firePropertyChange("ENVOIE-TEST", null, (Object) "."); 
+					String forme = ConnexionServeur.getForme();
+					Forme formeadessiner = createurForme.creerForme(forme);
+
+					// La m√©thode suivante alerte l'observateur
+					if (listener != null)
+						firePropertyChange("ENVOIE-TEST", null, formeadessiner);
 				}
-				//return null;
+				// return null;
 			}
 		};
-		if(listener!=null)
-		   threadComm.addPropertyChangeListener(listener); // La m√©thode "propertyChange" de ApplicationFormes sera donc appel√©e lorsque le SwinkWorker invoquera la m√©thode "firePropertyChanger" 		
+		if (listener != null)
+			threadComm.addPropertyChangeListener(listener); // La m√©thode
+															// "propertyChange"
+															// de
+															// ApplicationFormes
+															// sera donc
+															// appel√©e lorsque
+															// le SwinkWorker
+															// invoquera la
+															// m√©thode
+															// "firePropertyChanger"
 		threadComm.execute(); // Lance le fil d'ex√©cution parall√®le.
 		isActif = true;
 	}
-	
+
 	/**
 	 * @return si le fil d'ex√©cution parall√®le est actif
 	 */
-	public boolean isActif(){
+	public boolean isActif() {
 		return isActif;
 	}
-	
+
 }

@@ -17,8 +17,7 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.JFrame;
 
-import Forme.CreateurFormes;
-import Forme.Forme;
+import Forme.*;
 
 /**
  * Cette classe représente la fenêtre principale de l'application
@@ -29,6 +28,9 @@ import Forme.Forme;
 public class FenetrePrincipale extends JFrame implements PropertyChangeListener {
 
 	private static final long serialVersionUID = -1210804336046370508L;
+	private CreateurFormes cf;
+	private FenetreFormes ff;
+	private String linereceived;
 
 	/**
 	 * Constructeur
@@ -57,11 +59,11 @@ public class FenetrePrincipale extends JFrame implements PropertyChangeListener 
 	public void propertyChange(PropertyChangeEvent arg0) {
 
 		if (arg0.getPropertyName().equals("ENVOIE-TEST")) {
-			System.out.print((String) arg0.getNewValue());
+			linereceived = arg0.getNewValue().toString();
+			System.out.print(linereceived);
+			Forme forme = cf.creerForme(linereceived);
+			ff.addForme(forme);
 		}
-		CreateurFormes cf = new CreateurFormes();
-		FenetreFormes ff = new FenetreFormes();
-		Forme forme = cf.creerForme(arg0.getNewValue().toString());
-		ff.addForme(forme);
+
 	}
 }
