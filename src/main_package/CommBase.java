@@ -57,11 +57,12 @@ public class CommBase {
 	public void start() {
 		stringServeur = JOptionPane.showInputDialog("Veuillez entrer l'adresse ainsi que le port du serveur",
 				"localhost:10000");
-		String[] serveur = stringServeur.split(":"); // SÈpare la saisie de
-														// l'utilisateur en 2
-														// partie afin de
-														// rÈcupÈrer le nom
-														// d'hÙte et le port
+		String[] serveur = stringServeur.split(":"); 
+		// SÈpare la saisie de
+		// l'utilisateur en 2
+		// partie afin de
+		// rÈcupÈrer le nom
+		// d'hÙte et le port
 		nomServeur = serveur[0]; // Assigne le hostname
 		portServeur = Integer.parseInt(serveur[1]); // Assigne le port
 		ConnexionServeur.connexionServeur(nomServeur, portServeur); // Lance la
@@ -103,16 +104,11 @@ public class CommBase {
 			}
 		};
 		if (listener != null)
-			threadComm.addPropertyChangeListener(listener); // La m√©thode
-															// "propertyChange"
-															// de
-															// ApplicationFormes
-															// sera donc
-															// appel√©e lorsque
-															// le SwinkWorker
-															// invoquera la
-															// m√©thode
-															// "firePropertyChanger"
+			threadComm.addPropertyChangeListener(listener); 
+		/**
+		 La m√©thode "propertyChange" de ApplicationFormes sera donc appel√©e lorsque
+		 le SwingWorker invoquera la m√©thode "firePropertyChanger"
+		 */
 		threadComm.execute(); // Lance le fil d'ex√©cution parall√®le.
 		isActif = true;
 	}
