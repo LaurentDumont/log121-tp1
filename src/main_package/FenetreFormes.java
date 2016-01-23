@@ -5,7 +5,6 @@ import java.awt.Graphics;
 
 import javax.swing.JComponent;
 
-import Forme.CreateurFormes;
 import Forme.Forme;
 /******************************************************
 Cours:  LOG121
@@ -33,15 +32,6 @@ public class FenetreFormes extends JComponent {
 	public static final Dimension dimension = new Dimension(500, 500);
 	private Forme formetab[];
 	private int indexForme;
-	/*
-	public String test1 = "45056 <LIGNE> 234 164 409 331 </LIGNE>";
-	public String test2 = "61442 <CARRE> 195 332 210 347 </CARRE>";
-	public String test3 = "57347 <RECTANGLE> 397 309 489 364 </RECTANGLE>";
-	public Forme forme1;
-	public Forme forme2;
-	public Forme forme3;
-	*/
-	
 
 	/**
 	 * Constructeur
@@ -56,16 +46,17 @@ public class FenetreFormes extends JComponent {
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
-		for(int i = 0; i < formetab.length; i++){
-			if(formetab[i] != null){
+		for (int i = 0; i < formetab.length; i++) {
+			if (formetab[i] != null) {
 				formetab[i].draw(g);
-				
+
 			}
 		}
 
 	}
+
 	public void addForme(Forme forme) {
-		if(indexForme > 9){
+		if (indexForme > 9) {
 			indexForme = 0;
 		}
 		formetab[indexForme] = forme;
@@ -74,8 +65,8 @@ public class FenetreFormes extends JComponent {
 	}
 
 	/*
-	 * Le Layout qui utilise (contient) FenetreFormes doit rÃ©server l'espace
-	 * nÃ©cessaire Ã  son affichage
+	 * Le Layout qui utilise (contient) FenetreFormes doit réserver l'espace
+	 * nécessaire à  son affichage
 	 */
 	@Override
 	public Dimension getPreferredSize() {

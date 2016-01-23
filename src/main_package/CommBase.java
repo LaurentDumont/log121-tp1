@@ -3,7 +3,7 @@ package main_package;
 Cours:  LOG121
 Projet: Squelette du laboratoire #1
 Nom du fichier: CommBase.java
-Date crÃ©Ã©: 2013-05-03
+Date créé: 2013-05-03
 *******************************************************
 Historique des modifications
 *******************************************************
@@ -20,7 +20,7 @@ import Forme.CreateurFormes;
 import Forme.Forme;
 
 /**
- * Base d'une communication via un fil d'exÃ©cution parallÃ¨le.
+ * Base d'une communication via un fil d'exécution parallèle.
  */
 public class CommBase {
 
@@ -37,6 +37,7 @@ public class CommBase {
 	 * Constructeur
 	 */
 	public CommBase() {
+		createurForme = new CreateurFormes();
 	}
 
 	/**
@@ -44,7 +45,7 @@ public class CommBase {
 	 * serveur
 	 * 
 	 * @param listener
-	 *            sera alertÃ© lors de l'appel de "firePropertyChanger" par le
+	 *            sera alerté lors de l'appel de "firePropertyChanger" par le
 	 *            SwingWorker
 	 */
 	public void setPropertyChangeListener(PropertyChangeListener listener) {
@@ -52,7 +53,7 @@ public class CommBase {
 	}
 
 	/**
-	 * DÃ©marre la communication
+	 * Démarre la communication
 	 */
 	public void start() {
 		stringServeur = JOptionPane.showInputDialog("Veuillez entrer l'adresse ainsi que le port du serveur",
@@ -83,10 +84,10 @@ public class CommBase {
 	}
 
 	/**
-	 * CrÃ©er le nÃ©cessaire pour la communication avec le serveur
+	 * Créer le nécessaire pour la communication avec le serveur
 	 */
 	protected void creerCommunication() {
-		// CrÃ©e un fil d'exÃ©cusion parallÃ¨le au fil courant,
+		// Crée un fil d'exécusion parallèle au fil courant,
 		threadComm = new SwingWorker() {
 			@Override
 			protected Object doInBackground() throws Exception {
@@ -96,7 +97,7 @@ public class CommBase {
 					String forme = ConnexionServeur.getForme();
 					Forme formeadessiner = createurForme.creerForme(forme);
 
-					// La mÃ©thode suivante alerte l'observateur
+					// La méthode suivante alerte l'observateur
 					if (listener != null)
 						firePropertyChange("ENVOIE-TEST", null, formeadessiner);
 				}
@@ -106,15 +107,15 @@ public class CommBase {
 		if (listener != null)
 			threadComm.addPropertyChangeListener(listener); 
 		/**
-		 La mÃ©thode "propertyChange" de ApplicationFormes sera donc appelÃ©e lorsque
-		 le SwingWorker invoquera la mÃ©thode "firePropertyChanger"
+		 La méthode "propertyChange" de ApplicationFormes sera donc appelée lorsque
+		 le SwingWorker invoquera la méthode "firePropertyChanger"
 		 */
-		threadComm.execute(); // Lance le fil d'exÃ©cution parallÃ¨le.
+		threadComm.execute(); // Lance le fil d'exécution parallèle.
 		isActif = true;
 	}
 
 	/**
-	 * @return si le fil d'exÃ©cution parallÃ¨le est actif
+	 * @return si le fil d'exécution parallèle est actif
 	 */
 	public boolean isActif() {
 		return isActif;

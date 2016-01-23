@@ -3,7 +3,7 @@ package main_package;
 Cours:  LOG121
 Projet: Squelette du laboratoire #1
 Nom du fichier: MenuFenetre.java
-Date crÃ©Ã©: 2013-05-03
+Date créé: 2013-05-03
 *******************************************************
 Historique des modifications
 *******************************************************
@@ -14,6 +14,7 @@ Historique des modifications
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -21,7 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 /**
- * CrÃ©e le menu de la fenÃªtre de l'applicationÃ©
+ * Créer le menu de la fenêtre de l'application
  */
 public class MenuFenetre extends JMenuBar{
 	
@@ -45,7 +46,7 @@ public class MenuFenetre extends JMenuBar{
 	private JMenuItem arreterMenuItem, demarrerMenuItem;
 	private static final int DELAI_QUITTER_MSEC = 200;
  	   
-	CommBase comm; // Pour activer/dÃ©sactiver la communication avec le serveur
+	CommBase comm; // Pour activer/désactiver la communication avec le serveur
 	
 	/**
 	 * Constructeur
@@ -58,7 +59,7 @@ public class MenuFenetre extends JMenuBar{
 	}
 
 	/**
-	 *  CrÃ©er le menu "Draw". 
+	 *  Créer le menu "Draw". 
 	 */
 	protected void addMenuDessiner() {
 		JMenu menu = creerMenu(MENU_DESSIN_TITRE,new String[] { MENU_DESSIN_DEMARRER, MENU_DESSIN_ARRETER });
@@ -89,7 +90,7 @@ public class MenuFenetre extends JMenuBar{
 	}
 
 	/** 
-	 * CrÃ©er le menu "File". 
+	 * Créer le menu "File". 
 	 */
 	protected void addMenuFichier() {
 		JMenu menu = creerMenu(MENU_FICHIER_TITRE, new String[] { MENU_FICHIER_QUITTER });
@@ -111,7 +112,7 @@ public class MenuFenetre extends JMenuBar{
 	}
 
 	/**
-	 *  CrÃ©er le menu "Help". 
+	 *  Créer le menu "Help". 
 	 */
 	private void addMenuAide() {
 		JMenu menu = creerMenu(MENU_AIDE_TITRE, new String[] { MENU_AIDE_PROPOS });
@@ -125,7 +126,7 @@ public class MenuFenetre extends JMenuBar{
 	}
 
 	/**
-	 *  Activer ou dÃ©sactiver les items du menu selon la sÃ©lection. 
+	 *  Activer ou désactiver les items du menu selon la sélection. 
 	 */
 	private void rafraichirMenus() {
 		demarrerMenuItem.setEnabled(!comm.isActif());
@@ -133,9 +134,12 @@ public class MenuFenetre extends JMenuBar{
 	}
 	
 	/**
-	 * CrÃ©er un Ã©lÃ©ment de menu Ã  partir d'un champs principal et ses Ã©lÃ©ments
-	 * @param titleKey champs principal
-	 * @param itemKeys Ã©lÃ©ments
+	 * Créer un élément de menu à  partir d'un champs principal et ses éléments
+	 * 
+	 * @param titleKey
+	 *            champs principal
+	 * @param itemKeys
+	 *            éléments
 	 * @return le menu
 	 */
 	private static JMenu creerMenu(String titleKey,String[] itemKeys) {

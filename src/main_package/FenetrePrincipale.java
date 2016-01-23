@@ -3,7 +3,7 @@ package main_package;
 Cours:  LOG121
 Projet: Squelette du laboratoire #1
 Nom du fichier: FenetrePrincipale.java
-Date crÃ©Ã©: 2013-05-03
+Date créé: 2013-05-03
 *******************************************************
 Historique des modifications
 *******************************************************
@@ -16,11 +16,14 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.WindowConstants;
 
-import Forme.*;
+import Forme.CreateurFormes;
+import Forme.Forme;
 
 /**
- * Cette classe reprÃ©sente la fenÃªtre principale de l'application
+ * Cette classe représente la fenêtre principale de l'application
  * 
  * @author Patrice Boucher
  * @date 2013/05/04
@@ -37,33 +40,25 @@ public class FenetrePrincipale extends JFrame implements PropertyChangeListener 
 	 */
 	public FenetrePrincipale(CommBase comm) {
 
-		MenuFenetre menu = new MenuFenetre(comm);
+		JMenuBar menu = new MenuFenetre(comm);
 		this.setLayout(new BorderLayout());
 		this.add(menu, BorderLayout.NORTH);
-		FenetreFormes fenetreFormes = new FenetreFormes();
-		this.add(fenetreFormes, BorderLayout.CENTER); // Ajoute la fenÃªtre de
-														// forme Ã  la fenÃ¨tre
-														// principale
-		this.pack(); // Ajuste la dimension de la fenÃªtre principale selon
+		ff = new FenetreFormes();
+		this.add(ff, BorderLayout.CENTER); // Ajoute la fenêtre de
+											// forme à la fenètre
+											// principale
+		this.pack(); // Ajuste la dimension de la fenêtre principale selon
 						// celle de ses composants
-		this.setVisible(true); // Rend la fenÃªtre principale visible.
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // ... Ã  rÃ©viser
-																// selon le
-																// comportement
-																// que vous
-																// dÃ©sirez ...
+		this.setVisible(true); // Rend la fenêtre principale visible.
+		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 
-	// AppelÃ© lorsque le sujet lance "firePropertyChanger"
+	// Appelé lorsque le sujet lance "firePropertyChanger"
 	@Override
 	public void propertyChange(PropertyChangeEvent arg0) {
-
-		if (arg0.getPropertyName().equals("ENVOIE-TEST")) {
-			linereceived = arg0.getNewValue().toString();
-			System.out.print(linereceived);
-			Forme forme = cf.creerForme(linereceived);
+		if (arg0.getPropertyName().equals("ENVOIE-TEST") && arg0.getNewValue() instanceof Forme) {
+			Forme forme = (Forme) arg0.getNewValue();
 			ff.addForme(forme);
 		}
-
 	}
 }
