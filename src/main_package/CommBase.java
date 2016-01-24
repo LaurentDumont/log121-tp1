@@ -95,11 +95,11 @@ public class CommBase {
 				while (true) {
 					Thread.sleep(DELAI);
 					String forme = ConnexionServeur.getForme();
-					Forme formeadessiner = createurForme.creerForme(forme);
+					Forme formeADessiner = createurForme.creerForme(forme);
 
 					// La méthode suivante alerte l'observateur
 					if (listener != null)
-						firePropertyChange("ENVOIE-TEST", null, formeadessiner);
+						firePropertyChange("ENVOIE-TEST", null, formeADessiner);
 				}
 				// return null;
 			}
