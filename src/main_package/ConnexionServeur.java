@@ -57,7 +57,7 @@ public class ConnexionServeur {
 			
 		} catch (UnknownHostException e) { //Avertir l'utilisateur lorsque le nom d'hôte est introuvable.
 		      System.err.println("Le nom d'hôte "+ hostname + " est introuvable avec le serveur ");
-		      JOptionPane.showMessageDialog(null,"Le nom d'hôte: " + hostname + "est introuvable");
+		      JOptionPane.showMessageDialog(null,"Le nom d'hôte: " + hostname + " est introuvable");
 		      retry = JOptionPane.showConfirmDialog(null,
 		    		  "Le nom d'hôte "+ hostname + "est introuvable. Voulez-vous réessayer avec un autre serveur ?", "Oui ou Non?",
                       JOptionPane.YES_NO_OPTION);
