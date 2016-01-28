@@ -56,21 +56,9 @@ public class CommBase {
 	 * Démarre la communication
 	 */
 	public void start() {
-		stringServeur = JOptionPane.showInputDialog("Veuillez entrer l'adresse ainsi que le port du serveur",
-				"localhost:10000");
-		String[] serveur = stringServeur.split(":"); 
-		// Sépare la saisie de
-		// l'utilisateur en 2
-		// partie afin de
-		// récupérer le nom
-		// d'hôte et le port
-		nomServeur = serveur[0]; // Assigne le hostname
-		portServeur = Integer.parseInt(serveur[1]); // Assigne le port
-		ConnexionServeur.connexionServeur(nomServeur, portServeur); // Lance la
-																	// connexion
-																	// avec le
-																	// serveur
-		isActif = true;
+		DecortiqueurTexte.decortiqeur();
+		ConnexionServeur.connexionServeur(DecortiqueurTexte.getNomServeur(),DecortiqueurTexte.getPortServeur()); // Lance la connexion avec le serveur
+
 		creerCommunication();
 	}
 

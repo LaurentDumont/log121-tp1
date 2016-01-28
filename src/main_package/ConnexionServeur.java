@@ -62,7 +62,14 @@ public class ConnexionServeur {
 		    		  "Le nom d'hôte "+ hostname + "est introuvable. Voulez-vous réessayer avec un autre serveur ?", "Oui ou Non?",
                       JOptionPane.YES_NO_OPTION);
 		      
-		      if(retry == 0)nouveauServeur(); //Demande un nouveau serveur
+		      if (retry == JOptionPane.YES_OPTION) {
+		    	  //Demande un nouveau serveur
+		    	  nouveauServeur();
+		    	  
+		      }
+		      else {
+		           JOptionPane.showMessageDialog(null, "NO");
+		        }
 		      
 		    } catch (IOException e) { //Avertir lorsque le serveur ne répond pas sur le port spécifié par l'utilisateur.
 		      System.err.println("Le serveur ne semble pas être lancé sur le port" + port);
@@ -70,8 +77,14 @@ public class ConnexionServeur {
                       "Le serveur n'est pas démarré sur l'adresse suivante: "+ hostname + port + " Voulez-vous réessayer avec un autre serveur ?", "Oui ou Non?",
                       JOptionPane.YES_NO_OPTION);
 		      
-		      if(retry == 0)nouveauServeur();//Demande un nouveau serveur
+		      if (retry == JOptionPane.YES_OPTION) {
+		    	  //Demande un nouveau serveur
+		    	  nouveauServeur();
 		      }
+		      else {
+		           JOptionPane.showMessageDialog(null, "NO");
+		        }
+		     }
 	}
 	
 	/**
