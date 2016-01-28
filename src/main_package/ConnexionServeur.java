@@ -48,7 +48,7 @@ public class ConnexionServeur {
 	 */
 	
 	public static void connexionServeur(String hostname,int port){
-		
+
 		//Conexion au Serveur
 		try{
 			MonClient = new Socket(hostname, port); //Création d'un nouveau socket
@@ -65,11 +65,8 @@ public class ConnexionServeur {
 		      if (retry == JOptionPane.YES_OPTION) {
 		    	  //Demande un nouveau serveur
 		    	  nouveauServeur();
-		    	  
+
 		      }
-		      else {
-		           JOptionPane.showMessageDialog(null, "NO");
-		        }
 		      
 		    } catch (IOException e) { //Avertir lorsque le serveur ne répond pas sur le port spécifié par l'utilisateur.
 		      System.err.println("Le serveur ne semble pas être lancé sur le port" + port);
@@ -81,9 +78,7 @@ public class ConnexionServeur {
 		    	  //Demande un nouveau serveur
 		    	  nouveauServeur();
 		      }
-		      else {
-		           JOptionPane.showMessageDialog(null, "NO");
-		        }
+		      
 		     }
 	}
 	

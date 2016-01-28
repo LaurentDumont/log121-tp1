@@ -58,7 +58,6 @@ public class CommBase {
 	public void start() {
 		DecortiqueurTexte.decortiqeur();
 		ConnexionServeur.connexionServeur(DecortiqueurTexte.getNomServeur(),DecortiqueurTexte.getPortServeur()); // Lance la connexion avec le serveur
-
 		creerCommunication();
 	}
 

@@ -76,9 +76,11 @@ public class MenuFenetre extends JMenuBar{
 				MENU_DESSIN_DEMARRER_TOUCHE_MASK));
 
 		arreterMenuItem = menu.getItem(1);
+		arreterMenuItem.setEnabled(false);
 		arreterMenuItem.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 			comm.stop();
+			ConnexionServeur.deconnexionServeur();
 			rafraichirMenus();
 		    }
 	    });
@@ -97,6 +99,7 @@ public class MenuFenetre extends JMenuBar{
 		menu.getItem(0).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				comm.stop();
+				ConnexionServeur.deconnexionServeur();
 			    try {
 						Thread.sleep(DELAI_QUITTER_MSEC);
 				} catch (InterruptedException e) {
