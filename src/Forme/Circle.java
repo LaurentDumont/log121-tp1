@@ -5,7 +5,6 @@ import java.awt.Graphics;
 public class Circle extends Forme {
 	
 	private int radius, centreX, centreY;
-	private Graphics g;
 
 	public Circle( int centreX, int centreY, int radius ) {
 		this.centreX = centreX;
