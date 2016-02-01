@@ -58,23 +58,24 @@ public class ConnexionServeur {
 		} catch (UnknownHostException e) { //Avertir l'utilisateur lorsque le nom d'hôte est introuvable.
 		      System.err.println("Le nom d'hôte "+ hostname + " est introuvable avec le serveur ");
 		      JOptionPane.showMessageDialog(null,"Le nom d'hôte: " + hostname + " est introuvable");
-		      retry = JOptionPane.showConfirmDialog(null,
+		      setRetry(JOptionPane.showConfirmDialog(null,
 		    		  "Le nom d'hôte "+ hostname + "est introuvable. Voulez-vous réessayer avec un autre serveur ?", "Oui ou Non?",
-                      JOptionPane.YES_NO_OPTION);
+                      JOptionPane.YES_NO_OPTION));
 		      
-		      if (retry == JOptionPane.YES_OPTION) {
+		      if (getRetry() == JOptionPane.YES_OPTION) {
 		    	  //Demande un nouveau serveur
 		    	  nouveauServeur();
-
+		    	  
 		      }
+		     
 		      
 		    } catch (IOException e) { //Avertir lorsque le serveur ne répond pas sur le port spécifié par l'utilisateur.
 		      System.err.println("Le serveur ne semble pas être lancé sur le port" + port);
-		      retry = JOptionPane.showConfirmDialog(null,
+		      setRetry(JOptionPane.showConfirmDialog(null,
                       "Le serveur n'est pas démarré sur l'adresse suivante: "+ hostname + port + " Voulez-vous réessayer avec un autre serveur ?", "Oui ou Non?",
-                      JOptionPane.YES_NO_OPTION);
+                      JOptionPane.YES_NO_OPTION));
 		      
-		      if (retry == JOptionPane.YES_OPTION) {
+		      if (getRetry() == JOptionPane.YES_OPTION) {
 		    	  //Demande un nouveau serveur
 		    	  nouveauServeur();
 		      }
@@ -126,5 +127,13 @@ public class ConnexionServeur {
 		forme = réponseServeur.readLine();
 		
 		return forme;
+	}
+
+	public static int getRetry() {
+		return retry;
+	}
+
+	public static void setRetry(int retry) {
+		ConnexionServeur.retry = retry;
 	}
 }

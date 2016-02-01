@@ -15,7 +15,7 @@ public class Square extends Forme {
 
 	public void draw(Graphics g) {
 
-		g.setColor(Color.MAGENTA);
+		g.setColor(Color.BLACK);
 		g.fillRect(x1, y1, x2 - x1, y2 - y1);
 
 	}

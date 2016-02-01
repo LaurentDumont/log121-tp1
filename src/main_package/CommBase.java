@@ -13,7 +13,6 @@ Historique des modifications
 
 import java.beans.PropertyChangeListener;
 
-import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
 import Forme.CreateurFormes;
@@ -58,8 +57,13 @@ public class CommBase {
 	public void start() {
 		DecortiqueurTexte.decortiqeur();
 		ConnexionServeur.connexionServeur(DecortiqueurTexte.getNomServeur(),DecortiqueurTexte.getPortServeur()); // Lance la connexion avec le serveur
-		creerCommunication();
-	}
+			System.out.println(ConnexionServeur.getRetry());
+			if (ConnexionServeur.getRetry() == 0){
+			creerCommunication();
+			}
+		}
+		
+	
 
 	/**
 	 * Arrête la communication
