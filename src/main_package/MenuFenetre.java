@@ -66,32 +66,39 @@ public class MenuFenetre extends JMenuBar{
 
 		demarrerMenuItem = menu.getItem(0);
 		demarrerMenuItem.addActionListener(new ActionListener(){
-		  public void actionPerformed(ActionEvent arg0) {
-			  System.out.println(Thread.currentThread().getState().toString());
-			  comm.start();
-			
-			rafraichirMenus();
-		  }
+		public void actionPerformed(ActionEvent arg0) {
+		System.out.println(Thread.currentThread().getState().toString());
+		String stringServeur;
+		do {
+		stringServeur = JOptionPane.showInputDialog("Veuillez entrer l'adresse ainsi que le port du serveur", "localhost:10000");
+		if (stringServeur == null)
+		return;
+
+		} while (!DecortiqueurTexte.decortiqueur(stringServeur));
+		comm.start();
+
+		rafraichirMenus();
+		}
 		});
 		demarrerMenuItem.setAccelerator(KeyStroke.getKeyStroke(
-				MENU_DESSIN_DEMARRER_TOUCHE_RACC,
-				MENU_DESSIN_DEMARRER_TOUCHE_MASK));
+		MENU_DESSIN_DEMARRER_TOUCHE_RACC,
+		MENU_DESSIN_DEMARRER_TOUCHE_MASK));
 
 		arreterMenuItem = menu.getItem(1);
 		arreterMenuItem.setEnabled(false);
 		arreterMenuItem.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-			comm.stop();
-			ConnexionServeur.deconnexionServeur();
-			rafraichirMenus();
-		    }
-	    });
-		
+		public void actionPerformed(ActionEvent arg0) {
+		comm.stop();
+		ConnexionServeur.deconnexionServeur();
+		rafraichirMenus();
+		}
+		});
+
 		arreterMenuItem.setAccelerator(KeyStroke.getKeyStroke(
-				MENU_DESSIN_ARRETER_TOUCHE_RACC,
-				MENU_DESSIN_ARRETER_TOUCHE_MASK));
+		MENU_DESSIN_ARRETER_TOUCHE_RACC,
+		MENU_DESSIN_ARRETER_TOUCHE_MASK));
 		add(menu);
-	}
+		}
 
 	/** 
 	 * Créer le menu "File". 
@@ -102,9 +109,6 @@ public class MenuFenetre extends JMenuBar{
 			public void actionPerformed(ActionEvent arg0) {
 				
 				comm.stop();
-				
-				
-				System.out.println(Thread.currentThread().getState().toString());
 			    try {
 						Thread.sleep(DELAI_QUITTER_MSEC);
 				} catch (InterruptedException e) {

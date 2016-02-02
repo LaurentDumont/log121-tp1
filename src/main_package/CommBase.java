@@ -55,30 +55,27 @@ public class CommBase {
 	 * Démarre la communication
 	 */
 	public void start() {
-		DecortiqueurTexte.decortiqueur();
-		ConnexionServeur.connexionServeur(DecortiqueurTexte.getNomServeur(),DecortiqueurTexte.getPortServeur()); // Lance la connexion avec le serveur
-			System.out.println(ConnexionServeur.getRetry());
-			if (ConnexionServeur.getRetry() == 0){
+		// Lance la connexion avec le serveur
+		System.out.println(ConnexionServeur.getRetry());
+		ConnexionServeur.connexionServeur(DecortiqueurTexte.getNomServeur(), DecortiqueurTexte.getPortServeur());
+		if (ConnexionServeur.getRetry() == 0) {
 			creerCommunication();
-			}
 		}
-		
-	private enum Status{
+	}
+
+	private enum Status {
 		RUNNABLE, NEW;
 	}
 
 	/**
-	 * ArrÃªte la  communication
+	 * Arrète la communication
 	 */
 	public void stop() {
-		if (threadComm != null)
+		if (threadComm != null && threadComm.getState().equals(Status.RUNNABLE))
 			threadComm.cancel(true);
 		isActif = false;
-		
-		if(threadComm.getState().equals( Status.RUNNABLE)){
-			System.out.println(threadComm.getState().toString());
-			ConnexionServeur.deconnexionServeur();
-		}
+		ConnexionServeur.deconnexionServeur();
+
 	}
 
 	/**
@@ -103,10 +100,10 @@ public class CommBase {
 			}
 		};
 		if (listener != null)
-			threadComm.addPropertyChangeListener(listener); 
+			threadComm.addPropertyChangeListener(listener);
 		/**
-		 La méthode "propertyChange" de ApplicationFormes sera donc appelée lorsque
-		 le SwingWorker invoquera la méthode "firePropertyChanger"
+		 * La méthode "propertyChange" de ApplicationFormes sera donc appelée
+		 * lorsque le SwingWorker invoquera la méthode "firePropertyChanger"
 		 */
 		threadComm.execute(); // Lance le fil d'exécution parallèle.
 		isActif = true;
