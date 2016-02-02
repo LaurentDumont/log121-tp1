@@ -1,3 +1,21 @@
+/******************************************************
+Cours : LOG121
+Session : H2016
+Groupe : 01
+Projet : Laboratoire #1
+Étudiant(e)(s) : Laurent Dumont, Bach Nguyen Ngoc
+Code(s) perm. : DUML04059004, NGUB08049302	
+Professeur : Dominic St-Jacques
+Chargé de labo : Simon Robert
+Nom du fichier : DecortiqueurTexte.java
+Date créé : 2016-01-15
+Date dern. modif. 2016-01-19
+*******************************************************
+Historique des modifications
+*******************************************************
+2016-01-6 Version initiale
+*******************************************************/
+
 package main_package;
 
 import javax.swing.JOptionPane;
