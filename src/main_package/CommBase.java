@@ -56,7 +56,6 @@ public class CommBase {
 	 */
 	public void start() {
 		// Lance la connexion avec le serveur
-		System.out.println(ConnexionServeur.getRetry());
 		ConnexionServeur.connexionServeur(DecortiqueurTexte.getNomServeur(), DecortiqueurTexte.getPortServeur());
 		if (ConnexionServeur.getRetry() == 0) {
 			creerCommunication();

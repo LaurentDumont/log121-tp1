@@ -19,13 +19,12 @@ Historique des modifications
 
 package main_package;
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+
 import javax.swing.JOptionPane;
 
 
@@ -111,7 +110,7 @@ public class ConnexionServeur {
 	 * Requête "END" au serveur afin de mettre fin à la connexion.
 	 */
 	public static void deconnexionServeur() {
-		
+
 		try {
 			envoieServeur = new PrintWriter(MonClient.getOutputStream(), true);
 		} catch (IOException e) {

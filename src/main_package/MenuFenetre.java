@@ -67,7 +67,6 @@ public class MenuFenetre extends JMenuBar{
 		demarrerMenuItem = menu.getItem(0);
 		demarrerMenuItem.addActionListener(new ActionListener(){
 		public void actionPerformed(ActionEvent arg0) {
-		System.out.println(Thread.currentThread().getState().toString());
 		String stringServeur;
 		do {
 		stringServeur = JOptionPane.showInputDialog("Veuillez entrer l'adresse ainsi que le port du serveur", "localhost:10000");
