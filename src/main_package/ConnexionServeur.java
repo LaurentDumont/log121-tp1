@@ -32,6 +32,8 @@ import javax.swing.JOptionPane;
 public class ConnexionServeur {
 	
 	private static Socket MonClient;
+	private static String hostname = null;
+	private static int port = 0;
 	private static PrintWriter envoieServeur = null;
 	private static BufferedReader réponseServeur = null;
 	private static String requeteForme = "GET";
@@ -88,7 +90,7 @@ public class ConnexionServeur {
 	
 	/**
 	 * 
-	 * 
+	 * Méthode qui permet de demander un nouveau serveur à l'utilisateur.
 	 * 
 	 */
 	
