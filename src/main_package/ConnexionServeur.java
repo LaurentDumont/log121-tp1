@@ -66,7 +66,7 @@ public class ConnexionServeur {
                       JOptionPane.YES_NO_OPTION));
 		      
 		      if (getRetry() == JOptionPane.YES_OPTION) {
-		    	  //Demande un nouveau serveur
+		    	  //Demande un autre serveur à l'utilisateur
 		    	  nouveauServeur();
 		    	  
 		      }
@@ -81,7 +81,7 @@ public class ConnexionServeur {
 		      
 		      if (getRetry() == JOptionPane.YES_OPTION) {
 		    	  
-		    	  //Demande un nouveau serveur
+		    	  //Demande un autre serveur à l'utilisateur
 		    	  nouveauServeur();
 		      }
 		      
@@ -101,6 +101,7 @@ public class ConnexionServeur {
 		String [] serveur = chaîneServeur.split(":"); //Sépare la saisie de l'utilisateur en 2 partie afin de récupérer le nom d'hôte et le port
 		String hostname = serveur[0]; //Assigne le hostname
 		int port = Integer.parseInt(serveur[1]); //Assigne le port
+		
 		
 		connexionServeur(hostname,port);
 		
