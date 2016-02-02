@@ -55,7 +55,7 @@ public class CommBase {
 	 * D�marre la communication
 	 */
 	public void start() {
-		DecortiqueurTexte.decortiqeur();
+		DecortiqueurTexte.decortiqueur();
 		ConnexionServeur.connexionServeur(DecortiqueurTexte.getNomServeur(),DecortiqueurTexte.getPortServeur()); // Lance la connexion avec le serveur
 			System.out.println(ConnexionServeur.getRetry());
 			if (ConnexionServeur.getRetry() == 0){
@@ -63,15 +63,22 @@ public class CommBase {
 			}
 		}
 		
-	
+	private enum Status{
+		RUNNABLE, NEW;
+	}
 
 	/**
-	 * Arrête la communication
+	 * Arrête la  communication
 	 */
 	public void stop() {
 		if (threadComm != null)
 			threadComm.cancel(true);
 		isActif = false;
+		
+		if(threadComm.getState().equals( Status.RUNNABLE)){
+			System.out.println(threadComm.getState().toString());
+			ConnexionServeur.deconnexionServeur();
+		}
 	}
 
 	/**
