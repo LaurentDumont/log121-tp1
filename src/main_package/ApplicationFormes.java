@@ -14,7 +14,7 @@ Historique des modifications
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
+//penis caca
 /**
  * Cette classe représente l'application dans son ensemble. 
  * @author Patrice Boucher
