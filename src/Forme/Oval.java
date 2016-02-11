@@ -16,7 +16,7 @@ public class Oval extends Forme {
 
 	public void draw(Graphics g) {
 		g.setColor(Color.GRAY);
-		g.fillOval(centreX, centreY, width, length);
+		g.fillOval(centreX, centreY, width*2, length*2);
 		
 	}
 
