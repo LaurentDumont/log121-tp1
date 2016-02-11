@@ -18,7 +18,6 @@ Historique des modifications
 
 package main_package;
 
-import javax.swing.JOptionPane;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

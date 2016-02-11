@@ -9,12 +9,8 @@ Historique des modifications
 *******************************************************
 *@author Patrice Boucher
 2013-05-03 Version initiale
-*******************************************************/  
- 
+*******************************************************/
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-//penis caca
 /**
  * Cette classe représente l'application dans son ensemble. 
  * @author Patrice Boucher
