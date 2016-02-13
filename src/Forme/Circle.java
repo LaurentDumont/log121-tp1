@@ -23,11 +23,11 @@ import java.awt.Graphics;
 public class Circle extends Forme {
 	
 	private int radius, centreX, centreY;
+	private final String TYPE = "CERCLE";
 
 	public Circle( int centreX, int centreY, int radius ) {
-		this.centreX = centreX;
-		this.centreY = centreY;
-		this.radius = radius;
+		super(centreX, centreY, radius, radius);
+		setType(TYPE);
 	}
 
 	public void draw(Graphics g) {
@@ -36,6 +36,12 @@ public class Circle extends Forme {
 		
 	}
 	
-	
+	public double calculAire(){
+		return Math.PI * Math.pow(radius/2, 2);
+	}
+
+	public double getDiagonale() {
+		return radius * 2;
+	}
 
 }
