@@ -123,7 +123,7 @@ public class MenuFenetre extends JMenuBar {
 	 * Créer le menu "File".
 	 */
 	protected void addMenuFichier() {
-		JMenu menu = creerMenu(MENU_FICHIER_QUITTER, new String[] { MENU_FICHIER_QUITTER });
+		JMenu menu = creerMenu(MENU_FICHIER_TITRE, new String[] { MENU_FICHIER_QUITTER });
 		menu.getItem(0).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
