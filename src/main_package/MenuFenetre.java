@@ -33,6 +33,8 @@ public class MenuFenetre extends JMenuBar {
 	private static final char MENU_DESSIN_DEMARRER_TOUCHE_RACC = KeyEvent.VK_D;
 	private static final int MENU_FICHIER_QUITTER_TOUCHE_MASK = ActionEvent.CTRL_MASK;
 	private static final char MENU_FICHIER_QUITTER_TOUCHE_RACC = KeyEvent.VK_Q;
+	private static final int MENU_OBTENIR_FORME_TOUCHE_MASK = ActionEvent.CTRL_MASK;
+	private static final char MENU_OBTENIR_FORME_TOUCHE_RACC = KeyEvent.VK_G;
 	private static final String 
 			MENU_FICHIER_TITRE = "app.frame.menus.file.title",
 			MENU_FICHIER_QUITTER = "app.frame.menus.file.exit", 
@@ -40,7 +42,8 @@ public class MenuFenetre extends JMenuBar {
 			MENU_DESSIN_DEMARRER = "app.frame.menus.draw.start", 
 			MENU_DESSIN_ARRETER = "app.frame.menus.draw.stop",
 			MENU_AIDE_TITRE = "app.frame.menus.help.title", 
-			MENU_AIDE_PROPOS = "app.frame.menus.help.about";
+			MENU_AIDE_PROPOS = "app.frame.menus.help.about",
+			MENU_OBTENIRFORME = "app.frame.menus.obtenir";
 
 	private static final String MESSAGE_DIALOGUE_A_PROPOS = "app.frame.dialog.about";
 
@@ -56,6 +59,7 @@ public class MenuFenetre extends JMenuBar {
 		this.comm = comm;
 		addMenuDessiner();
 		addMenuFichier();
+		addMenuObtenirFormes();
 		addMenuAide();
 	}
 	
@@ -99,12 +103,27 @@ public class MenuFenetre extends JMenuBar {
 				KeyStroke.getKeyStroke(MENU_DESSIN_ARRETER_TOUCHE_RACC, MENU_DESSIN_ARRETER_TOUCHE_MASK));
 		add(menu);
 	}
-
+	
+	/**
+	 * Créer le menu "ObtenirFormes".
+	 */
+	protected void addMenuObtenirFormes() {
+		JMenu menu = creerMenu(MENU_OBTENIRFORME, new String[] { MENU_OBTENIRFORME });
+		menu.getItem(0).addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("Get formes");
+			}
+		});
+		menu.getItem(0).setAccelerator(
+				KeyStroke.getKeyStroke(MENU_OBTENIR_FORME_TOUCHE_RACC, MENU_OBTENIR_FORME_TOUCHE_MASK));
+		add(menu);
+	}
+	
 	/**
 	 * Créer le menu "File".
 	 */
 	protected void addMenuFichier() {
-		JMenu menu = creerMenu(MENU_FICHIER_TITRE, new String[] { MENU_FICHIER_QUITTER });
+		JMenu menu = creerMenu(MENU_FICHIER_QUITTER, new String[] { MENU_FICHIER_QUITTER });
 		menu.getItem(0).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -122,7 +141,7 @@ public class MenuFenetre extends JMenuBar {
 				KeyStroke.getKeyStroke(MENU_FICHIER_QUITTER_TOUCHE_RACC, MENU_FICHIER_QUITTER_TOUCHE_MASK));
 		add(menu);
 	}
-
+	
 	/**
 	 * Créer le menu "Help".
 	 */
