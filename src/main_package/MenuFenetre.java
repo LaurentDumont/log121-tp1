@@ -47,7 +47,7 @@ public class MenuFenetre extends JMenuBar {
 
 	private static final String MESSAGE_DIALOGUE_A_PROPOS = "app.frame.dialog.about";
 
-	private JMenuItem arreterMenuItem, demarrerMenuItem;
+	private JMenuItem arreterMenuItem, demarrerMenuItem,obtenirFormeMenu;
 	private static final int DELAI_QUITTER_MSEC = 200;
 	CommBase comm; // Pour activer/désactiver la communication avec le serveur
 	
@@ -59,7 +59,6 @@ public class MenuFenetre extends JMenuBar {
 		this.comm = comm;
 		addMenuDessiner();
 		addMenuFichier();
-		addMenuObtenirFormes();
 		addMenuAide();
 	}
 	
@@ -105,25 +104,10 @@ public class MenuFenetre extends JMenuBar {
 	}
 	
 	/**
-	 * Créer le menu "ObtenirFormes".
-	 */
-	protected void addMenuObtenirFormes() {
-		JMenu menu = creerMenu(MENU_OBTENIRFORME, new String[] { MENU_OBTENIRFORME });
-		menu.getItem(0).addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Get formes");
-			}
-		});
-		menu.getItem(0).setAccelerator(
-				KeyStroke.getKeyStroke(MENU_OBTENIR_FORME_TOUCHE_RACC, MENU_OBTENIR_FORME_TOUCHE_MASK));
-		add(menu);
-	}
-	
-	/**
 	 * Créer le menu "File".
 	 */
 	protected void addMenuFichier() {
-		JMenu menu = creerMenu(MENU_FICHIER_TITRE, new String[] { MENU_FICHIER_QUITTER });
+		JMenu menu = creerMenu(MENU_FICHIER_TITRE, new String[] { MENU_FICHIER_QUITTER,MENU_OBTENIRFORME });
 		menu.getItem(0).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -139,6 +123,21 @@ public class MenuFenetre extends JMenuBar {
 		});
 		menu.getItem(0).setAccelerator(
 				KeyStroke.getKeyStroke(MENU_FICHIER_QUITTER_TOUCHE_RACC, MENU_FICHIER_QUITTER_TOUCHE_MASK));
+	
+		obtenirFormeMenu = menu.getItem(1);
+		arreterMenuItem.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+			}
+
+			
+		});
+		
+		obtenirFormeMenu.setAccelerator(KeyStroke.getKeyStroke(
+		MENU_OBTENIR_FORME_TOUCHE_RACC,
+		MENU_OBTENIR_FORME_TOUCHE_MASK));
+		
+		
+		
 		add(menu);
 	}
 	
