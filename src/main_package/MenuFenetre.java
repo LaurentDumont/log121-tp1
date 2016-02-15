@@ -101,7 +101,7 @@ public class MenuFenetre extends JMenuBar {
 					protected Object doInBackground() throws Exception {
 						
 						if(listener!=null)
-							firePropertyChange("button", null, absButton.getText()); //Donne la forme Ã  l'observateur	
+							firePropertyChange("button", null, absButton.getText()); //Donne la forme à  l'observateur	
 						
 						
 						return 1;
@@ -109,8 +109,8 @@ public class MenuFenetre extends JMenuBar {
 						
 					};
 				if(listener!=null)
-			    threadComm.addPropertyChangeListener(listener); // La mÃ©thode "propertyChange" de ApplicationFormes sera donc appelÃ©e lorsque le SwinkWorker invoquera la mÃ©thode "firePropertyChanger" 		
-				threadComm.execute(); // Lance le fil d'exÃ©cution parallÃ¨le.
+			    threadComm.addPropertyChangeListener(listener); // La méthode "propertyChange" de ApplicationFormes sera donc appelée lorsque le SwinkWorker invoquera la méthode "firePropertyChanger" 		
+				threadComm.execute(); // Lance le fil d'exécution parallèle.
 			}
 		};
 		
