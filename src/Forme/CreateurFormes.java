@@ -18,35 +18,46 @@ Historique des modifications
 
 package Forme;
 
+
 import ca.etsmtl.log.util.IDLogger;
 import main_package.Decoder;
 
 public class CreateurFormes {
 
-	public Forme creerForme(String chaineForme) {
-		Decoder code = new Decoder(chaineForme);
-		IDLogger logger = IDLogger.getInstance();
-		logger.logID(code.getID());
-		if (code.getForme().equals("LIGNE")) {
-			return new Line(code.getData1(), code.getData2(), code.getData3(), code.getData4());
+	/**
+	 * Methode static qui va prendre la forme du serveur et en crée une a partir des classes formes
+	 * @param reponseServeurTraite Classe contenant la forme traiter par le serveur
+	 * @return Une forme selon les parametres
+	 */
+	public static Forme creerForme(Decoder reponseServeurTraite){
+		
+		//Cree un tableau avec la string de coordonnee recu
+		String [] tabForme = reponseServeurTraite.getCoordonne().split(" ");
+		
+		Forme formeADessiner = null;
+		switch (reponseServeurTraite.getTypeForme()) {
+		case "RECTANGLE":
+			formeADessiner = new Rectangle(reponseServeurTraite, tabForme);
+			break;
+		case "CARRE":
+			formeADessiner= new Square(reponseServeurTraite, tabForme);
+			break;
+		case "OVALE":
+			formeADessiner = new Oval(reponseServeurTraite, tabForme);
+			break;
+		case "LIGNE":
+			formeADessiner = new Line(reponseServeurTraite, tabForme);
+		break;
+		case "CERCLE":
+			formeADessiner = new Circle(reponseServeurTraite, tabForme);
+			break;
+		
+		default:
+			break;
 		}
-
-		else if (code.getForme().equals("CARRE")) {
-			return new Square(code.getData1(), code.getData2(), code.getData3(), code.getData4());
-		}
-
-		else if (code.getForme().equals("RECTANGLE")) {
-			return new Rectangle(code.getData1(), code.getData2(), code.getData3(), code.getData4());
-		}
-
-		else if (code.getForme().equals("OVALE")) {
-			return new Oval(code.getData1(), code.getData2(), code.getData3(), code.getData4());
-		}
-
-		else if (code.getForme().equals("CERCLE")) {
-			return new Circle(code.getData1(), code.getData2(), code.getData3());
-		} else
-			System.out.println(code.getForme() + "est une forme invalide");
-			return null;
-	}
+		
+		return formeADessiner;
+		
+		}	
+	
 }

@@ -1,23 +1,22 @@
-/******************************************************
-Cours : LOG121
-Session : H2016
-Groupe : 01
-Projet : Laboratoire #1
-Étudiant(e)(s) : Laurent Dumont, Bach Nguyen Ngoc
-Code(s) perm. : DUML04059004, NGUB08049302	
-Professeur : Dominic St-Jacques
-Chargé de labo : Simon Robert
-Nom du fichier : ConnexionServeur.java
-Date créé : 2016-01-12
-Date dern. modif. 2016-01-19
-*******************************************************
-Historique des modifications
-*******************************************************
-2016-01-12 Version initiale
-*******************************************************/
-
-
 package main_package;
+/******************************************************
+Cours:  LOG121
+Session: E2015
+Projet: Squelette du laboratoire #2
+Ã‰tudiant(e)s: Julien Lemonde, Alexandre Malo, Marc-Antoine Hebert, Jean-Michel Coupal
+
+Professeur : Francis Cardinal
+Nom du fichier: Connexion.java
+Date créé: 2015-05-03
+*******************************************************
+Description de la classe
+Classe permettant la gestion et la communication avec 
+le serveur (Connexion, déconnexion, demande de forme, etc)
+*******************************************************
+@author Julien Lemonde, Alexandre Malo, Marc-Antoine Hebert, Jean-Michel Coupal
+2015-05-03 Version initiale
+*******************************************************/  
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -27,134 +26,119 @@ import java.net.UnknownHostException;
 
 import javax.swing.JOptionPane;
 
-
+/**
+ * Classe permettant la gestion et la communication avec 
+ * le serveur (Connexion, déconnexion, demande de forme, etc)
+ *
+ */
 public class ConnexionServeur {
-	
-	private static Socket MonClient;
-	private static String hostname = null;
-	private static int port = 0;
-	private static PrintWriter envoieServeur = null;
-	private static BufferedReader réponseServeur = null;
-	private static String requeteForme = "GET";
-	private static int retry;
+
+	private static Socket client;
+	private static PrintWriter printwriter = null;
+	private static BufferedReader bufferedReader = null;
+	private static int recommencer;
 	
 	/**
-	 * Permet la connexion au serveur  
+	 * Permet la connexion au serveur incluant une gestion des erreurs
 	 * 
-	 * @param hostname Le nom d'hôte du serveur applicatif.
-	 * @param port Le port de du serveur applicatif. Port par défaut = 10000
-
+	 * @param hostname Le nom d'hôte du serveur
+	 * @param port Le port du serveur
 	 */
+	public static void connexion(String hostname,int port){
 	
-	public static void connexionServeur(String hostname,int port){
-
-		//Connexion au Serveur
+		//Tentative de connexion au serveur
 		try{
-			
-			MonClient = new Socket(hostname, port); //Création d'un nouveau socket
-			envoieServeur = new PrintWriter(MonClient.getOutputStream(), true);
-			réponseServeur = new BufferedReader(new InputStreamReader(MonClient.getInputStream()));
-			
-		} catch (UnknownHostException e) { //Avertir l'utilisateur lorsque le nom d'hôte est introuvable.
-			
-		      System.err.println("Le nom d'hôte "+ hostname + " est introuvable avec le serveur ");
-		      JOptionPane.showMessageDialog(null,"Le nom d'hôte: " + hostname + " est introuvable");
-		      
-		      setRetry(JOptionPane.showConfirmDialog(null,
-		    		  "Le nom d'hôte "+ hostname + "est introuvable. Voulez-vous réessayer avec un autre serveur ?", "Oui ou Non?",
-                      JOptionPane.YES_NO_OPTION));
-		      
-		      if (getRetry() == JOptionPane.YES_OPTION) {
-		    	  //Demande un autre serveur à l'utilisateur
-		    	  nouveauServeur();
-		    	  
-		      }
-		     
-		      
-		    } catch (IOException e) { //Avertir lorsque le serveur ne répond pas sur le port spécifié par l'utilisateur.
-		    	
-		      System.err.println("Le serveur ne semble pas être lancé sur le port" + port);
-		      setRetry(JOptionPane.showConfirmDialog(null,
-                      "Le serveur n'est pas démarré sur l'adresse suivante: "+ hostname + port + " Voulez-vous réessayer avec un autre serveur ?", "Oui ou Non?",
-                      JOptionPane.YES_NO_OPTION));
-		      
-		      if (getRetry() == JOptionPane.YES_OPTION) {
-		    	  
-		    	  //Demande un autre serveur à l'utilisateur
-		    	  nouveauServeur();
-		      }
-		      
-		     }
-	}
-	
-	/**
-	 * 
-	 * Méthode qui permet de demander un nouveau serveur à l'utilisateur.
-	 * 
-	 */
-	
-	private static void nouveauServeur() {
+			client = new Socket(hostname, port); //Création d'un nouveau socket avec les informations fournis
+			printwriter = new PrintWriter(client.getOutputStream(), true);
+			bufferedReader = new BufferedReader(new InputStreamReader(client.getInputStream()));			
+		} 
 		
-		String chaîneServeur = JOptionPane.showInputDialog
-				("Veuillez entrer l'adresse ainsi que le port du serveur","localhost:10000");
-		String [] serveur = chaîneServeur.split(":"); //Sépare la saisie de l'utilisateur en 2 partie afin de récupérer le nom d'hôte et le port
-		String hostname = serveur[0]; //Assigne le hostname
-		int port = Integer.parseInt(serveur[1]); //Assigne le port
-		
-		
-		connexionServeur(hostname,port);
-		
-	}
-	
-	/**
-	 * Requête "END" au serveur afin de mettre fin à la connexion.
-	 */
-	public static void deconnexionServeur() {
+		//----------- Si l'hostname n'existe pas -------------
+		catch (UnknownHostException e) 
+		{ 
+		      //Demande Ã  l'utilisateur s'il désir recommencer ou non
+		      recommencer = JOptionPane.showConfirmDialog(null,"Le nom d'hôte ''"+ hostname + "'' est introuvable. Voulez-vous spécifier un autre serveur ?", "Application Formes",JOptionPane.YES_NO_OPTION);		   		      
+		      System.out.println("Le nom d'hôte ''"+ hostname + "'' est introuvable");
 
+		      if(recommencer == 0) //recommencer == 0 si l'utilisateur veux recommencer
+		    	  nouvelleConnexion();
+		      else //sinon on quitte l'application
+		    	  System.exit(0); 		      	     
+		}//------------------------------------------------------
+		
+		
+		
+		//------- Si le port spécifié est hors de porté --------
+		catch (IllegalArgumentException e) 
+		{
+		      //Demande Ã  l'utilisateur s'il désir recommencer ou non
+		      recommencer = JOptionPane.showConfirmDialog(null,"Le port numéro : "+ port + ", est hors de porté. Voulez-vous spécifier un autre port ?", "Application Formes",JOptionPane.YES_NO_OPTION);		   		      
+		      System.out.println("Le port numéro ''"+ port + "'' est hors de porté");
+
+		      if(recommencer == 0) //recommencer == 0 si l'utilisateur veux recommencer
+		    	  nouvelleConnexion();
+		      else //sinon on quitte l'application
+		    	  System.exit(0); 		      	     
+		}//-------------------------------------------------------
+		
+		
+		
+		//---- Si le serveur ne répond pas ou si le port est mauvais ----
+		catch (IOException e) 
+		{ 
+		      //Demande Ã  l'utilisateur s'il désir recommencer ou non
+		      recommencer = JOptionPane.showConfirmDialog(null,"Le serveur ne répond pas Ã  l'adresse suivante: ''"+ hostname + ":" + port + "''. Voulez-vous spécifier un autre serveur:port ?", "Application Formes",JOptionPane.YES_NO_OPTION);		     		      
+		      System.out.println("Le serveur n'est pas démarré ");
+
+		      if(recommencer == 0) //recommencer == 0 si l'utilisateur veux recommencer
+		    	  nouvelleConnexion();
+		      else //sinon on quitte l'application
+		    	  System.exit(0); 
+		 }//-------------------------------------------------------
+	}
+
+	/**
+	 * Envoie la commande "END" afin d'arreter le serveur
+	 * 
+	 */
+	public static void deconnexion(){
 		try {
-			envoieServeur = new PrintWriter(MonClient.getOutputStream(), true);
+			printwriter = new PrintWriter(client.getOutputStream(), true);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		envoieServeur.println("END");
-			
-	}
-	/**
-	 * Fonction permettant d'envoyer le commande "GET" au serveur pour générer des formes.
-	 * 
-	 * @return Chaîne de caractères représentants la forme générée par le serveur.
-	 * @throws IOException
-	 */
-	
-	public static String getForme() throws IOException {
+		printwriter.println("END");//Dit au serveur de fermer la connexion
 		
-		String forme;
-		envoieServeur.println(requeteForme);//Demande au server une nouvelle forme
-		réponseServeur.readLine(); //Lecture de la commande envoyé par le serveur
-		forme = réponseServeur.readLine();
-		
-		return forme;
 	}
 
 	/**
-	 * Permet de retourner le statut de retry.
-	 * @return retry
+	 * Envoie la commande "GET" afin d'obtenir des formes
+	 * 
+	 * @return La forme en chaine de caractère envoyé par le serveur
+	 * @throws IOException
 	 */
-	
-	public static int getRetry() {
+	public static String getForme() throws IOException {
+		String forme;
+		printwriter.println("GET");//Demande au serveur une nouvelle forme
+		bufferedReader.readLine(); //Lecture de la forme envoyé par le serveur
+		forme = bufferedReader.readLine();
 		
-		return retry;
-	
+		return forme;
 	}
+	
 	
 	/**
-	 * Permet de changer la valeur de la variable retry.
-	 * @param retry
+	 * Méthode pour retenter la connexion avec le serveur lorsque 
+	 * l'utilisateur demande de le faire
 	 */
-	
-	public static void setRetry(int retry) {
+	private static void nouvelleConnexion() {
+		String NomDeServeur = JOptionPane.showInputDialog("Quel est l'adresse du serveur?","localhost:10000");
 		
-		ConnexionServeur.retry = retry;
-	
+		String [] serveur = NomDeServeur.split(":"); //Sépare la chaine de caractère afin de récupérer le nom d'hôte et le port
+		String hostname = serveur[0]; //Assigne le hostname
+		int port = Integer.parseInt(serveur[1]); //Assigne le port
+		
+		connexion(hostname,port);		
 	}
+	
 }

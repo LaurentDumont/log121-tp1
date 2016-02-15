@@ -1,26 +1,12 @@
 package main_package;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
 
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 
 import Forme.Forme;
-/******************************************************
-Cours:  LOG121
-Projet: Squelette du laboratoire #1
-Nom du fichier: FenetreFormes.java
-Date cr√©√©: 2013-05-03
-*******************************************************
-Historique des modifications
-*******************************************************
-*@author Patrice Boucher
-2013-05-03 Version initiale
-*******************************************************/
 
 /**
  * Cette fen√™tre g√®re l'affichage des formes
@@ -35,14 +21,15 @@ public class FenetreFormes extends JComponent {
 	public static final int HEIGHT = 500;
 	public static final Dimension dimension = new Dimension(500, 500);
 	private Forme formetab[];
-	private int indexForme;
+	private ListeChainee liste;
+	private ListeChainee listeTriee;
 
 	/**
 	 * Constructeur
 	 */
 	public FenetreFormes() {
-		formetab = new Forme[10];
-		indexForme = 0;
+		liste = new ListeChainee();
+		listeTriee = new ListeChainee();
 	}
 
 	/*
@@ -50,42 +37,47 @@ public class FenetreFormes extends JComponent {
 	 */
 	@Override
 	public void paintComponent(Graphics g) {
-		for (int i = 0; i < formetab.length; i++) {
-			if (formetab[i] != null) {
-				formetab[i].draw(g);
-				/*
-				Graphics2D g2 = (Graphics2D) g;
-				float dash[] = { 10.0f };
-				g2.setStroke(new BasicStroke(3.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f));
-				g2.setPaint(Color.BLACK);
-				if (formetab[i].getType() == "CARREE" || formetab[i].getType() == "RECTANGLE" || formetab[i].getType() == "LIGNE") {
-					Rectangle r = new Rectangle(formetab[i].getCoordX(), formetab[i].getCoordY(),
-							formetab[i].getInfo1() - formetab[i].getCoordX(),
-							formetab[i].getInfo2() - formetab[i].getCoordY());
-					g2.draw(r);
-
-				} else if (formetab[i].getType() == "OVALE" || formetab[i].getType() == "CERCLE") {
-					Rectangle r = new Rectangle(formetab[i].getCoordX() - formetab[i].getInfo1(),
-							formetab[i].getCoordY() - formetab[i].getInfo2(), formetab[i].getInfo1(),
-							formetab[i].getInfo2());
-					g2.draw(r);
-					*/
-				}
-				
+		if (listeTriee.getNbELement() == 20) {
+			while (listeTriee.defileSansEnlever() != null) {
+				Forme forme = (Forme) listeTriee.defile();
+				forme.draw(g);
 			}
-
 		}
-	//}
 
-	public void addForme(Forme forme) {
-		if (indexForme > 9) {
-			indexForme = 0;
-		}
-		formetab[indexForme] = forme;
-		indexForme++;
-		this.repaint();
 	}
 
+	// }
+
+	public void addForme(Forme forme) {
+		if(liste.getNbELement() <10)
+			liste.enfile(forme);
+			else
+			{
+				liste.vider();
+				liste.enfile(forme);
+			}
+			this.repaint();
+	}
+
+	public void Trier(String methodeDeTri){
+		try {
+			if(this.liste.nbElement != 0)
+				this.listeTriee = TriSelonMenu.selection(methodeDeTri, liste);
+			else
+			{
+				JOptionPane.showOptionDialog(null,
+		                   "Veuillez obtenir les formes avant de choisir parmis c'est options","Erreur Formes",
+		                   JOptionPane.PLAIN_MESSAGE,
+		                   JOptionPane.QUESTION_MESSAGE,
+		                   null,
+		                   null,
+		                   null);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		this.repaint();
+	}
 	/*
 	 * Le Layout qui utilise (contient) FenetreFormes doit rÈserver l'espace
 	 * nÈcessaire ‡† son affichage
@@ -93,5 +85,13 @@ public class FenetreFormes extends JComponent {
 	@Override
 	public Dimension getPreferredSize() {
 		return dimension;
+	}
+
+	public Forme[] getFormetab() {
+		return formetab;
+	}
+
+	public void setFormetab(Forme formetab[]) {
+		this.formetab = formetab;
 	}
 }

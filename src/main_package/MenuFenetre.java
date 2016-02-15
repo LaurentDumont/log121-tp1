@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -31,20 +32,21 @@ import javax.swing.SwingWorker;
 public class MenuFenetre extends JMenuBar {
 
 	private static final long serialVersionUID = 1536336192561843187L;
-	private static final int MENU_DESSIN_ARRETER_TOUCHE_MASK = ActionEvent.CTRL_MASK;
-	private static final char MENU_DESSIN_ARRETER_TOUCHE_RACC = KeyEvent.VK_A;
-	private static final int MENU_DESSIN_DEMARRER_TOUCHE_MASK = ActionEvent.CTRL_MASK;
-	private static final char MENU_DESSIN_DEMARRER_TOUCHE_RACC = KeyEvent.VK_D;
 	private static final int MENU_FICHIER_QUITTER_TOUCHE_MASK = ActionEvent.CTRL_MASK;
 	private static final char MENU_FICHIER_QUITTER_TOUCHE_RACC = KeyEvent.VK_Q;
-	private static final int MENU_OBTENIR_FORME_TOUCHE_MASK = ActionEvent.CTRL_MASK;
-	private static final char MENU_OBTENIR_FORME_TOUCHE_RACC = KeyEvent.VK_G;
-	private static final String MENU_FICHIER_TITRE = "app.frame.menus.file.title",
-			MENU_FICHIER_QUITTER = "app.frame.menus.file.exit", MENU_DESSIN_TITRE = "app.frame.menus.draw.title",
-			MENU_DESSIN_DEMARRER = "app.frame.menus.draw.start", MENU_DESSIN_ARRETER = "app.frame.menus.draw.stop",
-			MENU_AIDE_TITRE = "app.frame.menus.help.title", MENU_AIDE_PROPOS = "app.frame.menus.help.about",
-			MENU_OBTENIRFORME = "app.frame.menus.obtenir",
-
+	private static final int  MENU_FICHIER_OBTENIR_TOUCHE_MASK = ActionEvent.CTRL_MASK;
+	private static final char MENU_FICHIER_OBTENIR_TOUCHE_RACC = KeyEvent.VK_W;
+	
+	private static final String 
+	
+	
+			MENU_AIDE_TITRE = "app.frame.menus.help.title", 
+			MENU_AIDE_PROPOS = "app.frame.menus.help.about",
+			
+			MENU_FICHIER_TITRE = "app.frame.menus.file.title",
+			MENU_FICHIER_OBTENIR = "app.frame.menus.file.obtain",
+			MENU_FICHIER_QUITTER = "app.frame.menus.file.exit",
+			
 			MENU_ORDRE_TITRE = "app.frame.menus.order.title",
 			MENU_ORDRE_NUMSEQCROIS = "app.frame.menus.order.numseqcrois",
 			MENU_ORDRE_NUMSEQDECROIS = "app.frame.menus.order.numseqdecrois",
@@ -55,12 +57,13 @@ public class MenuFenetre extends JMenuBar {
 			MENU_ORDRE_DISTANCEFORME = "app.frame.menus.order.distance";
 
 	private static final String MESSAGE_DIALOGUE_A_PROPOS = "app.frame.dialog.about";
-
+	
 	private JMenuItem arreterMenuItem, demarrerMenuItem, obtenirFormeMenu;
 	private static final int DELAI_QUITTER_MSEC = 200;
-
-	private PropertyChangeListener listener = null;
 	private JMenuItem obtenirMenuItem;
+	private static JRadioButtonMenuItem numSeqCroisMenuRadioItem, numSeqDecroisMenuRadioItem, aireCroisMenuRadioItem, aireDecroisMenuRadioItem, typeFormeMenuRadioItem, typeFormeInverseMenuRadioItem, distanceFormeMenuRadioItem;
+	private String MenuSelectionner;
+	private PropertyChangeListener listener = null;
 	@SuppressWarnings("rawtypes")
 	private SwingWorker threadComm = null;
 	CommBase comm; // Pour activer/dÈsactiver la communication avec le serveur
@@ -70,51 +73,101 @@ public class MenuFenetre extends JMenuBar {
 	 */
 	public MenuFenetre(CommBase comm) {
 		this.comm = comm;
-		addMenuDessiner();
 		addMenuFichier();
 		addMenuOrdre();
 		addMenuAide();
 
 	}
-
+	
+	public String getMenuSelected()
+	{
+		return MenuSelectionner;
+	}
+	
 	public void setPropertyChangeListener(PropertyChangeListener listener) {
 		this.listener = listener;
 	}
 
-	private void addMenuOrdre() {
-		JMenu menu = creerMenu(MENU_ORDRE_TITRE,new String[] { });
-		ButtonGroup group = new ButtonGroup();
-
-		JRadioButtonMenuItem menuItem = new JRadioButtonMenuItem("numseqcrois");
-		JRadioButtonMenuItem menuItem2 = new JRadioButtonMenuItem("numseqdecrois");
-		JRadioButtonMenuItem menuItem3 = new JRadioButtonMenuItem("airecrois");
-		JRadioButtonMenuItem menuItem4 = new JRadioButtonMenuItem("airedecrois");
-		JRadioButtonMenuItem menuItem5 = new JRadioButtonMenuItem("typeforme");
-		JRadioButtonMenuItem menuItem6 = new JRadioButtonMenuItem("typeformeinverse");
-		JRadioButtonMenuItem menuItem7 = new JRadioButtonMenuItem("distanceforme");
+	protected void addMenuOrdre() {
+			JMenu menu = creerMenuRadio(MENU_ORDRE_TITRE, new String[] {MENU_ORDRE_NUMSEQCROIS, MENU_ORDRE_NUMSEQDECROIS, MENU_ORDRE_AIRECROIS, MENU_ORDRE_AIREDECROIS, MENU_ORDRE_TYPEFORME, MENU_ORDRE_TYPEFORMEINVERSE, MENU_ORDRE_DISTANCEFORME});
 		
-		group.add(menuItem);
-		group.add(menuItem2);
-		group.add(menuItem3);
-		group.add(menuItem4);
-		group.add(menuItem5);
-		group.add(menuItem6);
-		group.add(menuItem7);
-
-		menu.add(menuItem);
-		menu.add(menuItem2);
-		menu.add(menuItem3);
-		menu.add(menuItem4);
-		menu.add(menuItem5);
-		menu.add(menuItem6);
-		menu.add(menuItem7);
+		ActionListener radioActionListener = new ActionListener() {
+			@SuppressWarnings("rawtypes")
+			public void actionPerformed(ActionEvent e) {
+				AbstractButton absButton = (AbstractButton) e.getSource();
+				threadComm = new SwingWorker(){
+					
+					@Override
+					protected Object doInBackground() throws Exception {
+						
+						if(listener!=null)
+							firePropertyChange("button", null, absButton.getText()); //Donne la forme √† l'observateur	
+						
+						
+						return 1;
+					}
+						
+					};
+				if(listener!=null)
+			    threadComm.addPropertyChangeListener(listener); // La m√©thode "propertyChange" de ApplicationFormes sera donc appel√©e lorsque le SwinkWorker invoquera la m√©thode "firePropertyChanger" 		
+				threadComm.execute(); // Lance le fil d'ex√©cution parall√®le.
+			}
+		};
+		
+		numSeqCroisMenuRadioItem.addActionListener(radioActionListener);
+		numSeqDecroisMenuRadioItem.addActionListener(radioActionListener);
+		aireCroisMenuRadioItem.addActionListener(radioActionListener);
+		aireDecroisMenuRadioItem.addActionListener(radioActionListener);
+		typeFormeMenuRadioItem.addActionListener(radioActionListener);
+		typeFormeInverseMenuRadioItem.addActionListener(radioActionListener);
+		distanceFormeMenuRadioItem.addActionListener(radioActionListener);
+		
 		add(menu);
 	}
 
+	private static JMenu creerMenuRadio(String titleKey,String[] itemKeys) {
+		ButtonGroup group = new ButtonGroup();
+        JMenu menu = new JMenu(LangueConfig.getResource(titleKey));
+        for(int i=0; i < itemKeys.length; ++i) {
+        	JRadioButtonMenuItem button = new JRadioButtonMenuItem(LangueConfig.getResource(itemKeys[i]));
+        	group.add(button);
+            menu.add(button);
+           
+            switch (itemKeys[i]) {
+			case MENU_ORDRE_NUMSEQCROIS:
+				numSeqCroisMenuRadioItem = button;
+				break;
+			case MENU_ORDRE_NUMSEQDECROIS:
+				numSeqDecroisMenuRadioItem = button;
+				break;
+			case MENU_ORDRE_AIRECROIS:
+				aireCroisMenuRadioItem = button;
+				break;
+			case MENU_ORDRE_AIREDECROIS:
+				aireDecroisMenuRadioItem = button;
+				break;
+			case MENU_ORDRE_TYPEFORME:
+				typeFormeMenuRadioItem = button;
+				break;
+			case MENU_ORDRE_TYPEFORMEINVERSE:
+				typeFormeInverseMenuRadioItem = button;
+				break;
+			case MENU_ORDRE_DISTANCEFORME:
+				distanceFormeMenuRadioItem = button;
+				break;
+			default:
+				break;
+			}
 
+        }
+        return menu;
+   }
+	
+	
 	/**
 	 * CrÈer le menu "Draw".
 	 */
+	/*
 	protected void addMenuDessiner() {
 		JMenu menu = creerMenu(MENU_DESSIN_TITRE, new String[] { MENU_DESSIN_DEMARRER, MENU_DESSIN_ARRETER });
 
@@ -151,38 +204,39 @@ public class MenuFenetre extends JMenuBar {
 				KeyStroke.getKeyStroke(MENU_DESSIN_ARRETER_TOUCHE_RACC, MENU_DESSIN_ARRETER_TOUCHE_MASK));
 		add(menu);
 	}
-
+*/
 	/**
 	 * CrÈer le menu "File".
 	 */
 	protected void addMenuFichier() {
-		JMenu menu = creerMenu(MENU_FICHIER_TITRE, new String[] { MENU_FICHIER_QUITTER, MENU_OBTENIRFORME });
-		menu.getItem(0).addActionListener(new ActionListener() {
+		JMenu menu = creerMenu(MENU_FICHIER_TITRE, new String[] { MENU_FICHIER_OBTENIR, MENU_FICHIER_QUITTER });
+		menu.getItem(1).addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
 				comm.stop();
-				try {
-					Thread.sleep(DELAI_QUITTER_MSEC);
+			    try {
+						Thread.sleep(DELAI_QUITTER_MSEC);
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+						e.printStackTrace();
 				}
 				System.exit(0);
-
 			}
 		});
+		
+		obtenirMenuItem = menu.getItem(0);
+		obtenirMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				comm.start();
+				
+			
+			}
+		});
+		
 		menu.getItem(0).setAccelerator(
-				KeyStroke.getKeyStroke(MENU_FICHIER_QUITTER_TOUCHE_RACC, MENU_FICHIER_QUITTER_TOUCHE_MASK));
-
-		obtenirFormeMenu = menu.getItem(1);
-		arreterMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-
-		});
-
-		obtenirFormeMenu
-				.setAccelerator(KeyStroke.getKeyStroke(MENU_OBTENIR_FORME_TOUCHE_RACC, MENU_OBTENIR_FORME_TOUCHE_MASK));
-
+				KeyStroke.getKeyStroke(MENU_FICHIER_QUITTER_TOUCHE_RACC,
+						MENU_FICHIER_QUITTER_TOUCHE_MASK));
+		menu.getItem(1).setAccelerator(
+				KeyStroke.getKeyStroke(MENU_FICHIER_OBTENIR_TOUCHE_RACC,
+						MENU_FICHIER_OBTENIR_TOUCHE_MASK));
 		add(menu);
 	}
 
@@ -203,11 +257,12 @@ public class MenuFenetre extends JMenuBar {
 	/**
 	 * Activer ou dÈsactiver les items du menu selon la sÈlection.
 	 */
+	/*
 	private void rafraichirMenus() {
 		demarrerMenuItem.setEnabled(!comm.isActif());
 		arreterMenuItem.setEnabled(comm.isActif());
 	}
-
+*/
 	/**
 	 * CrÈer un ÈlÈment de menu ‡† partir d'un champs principal et ses ÈlÈments
 	 * 

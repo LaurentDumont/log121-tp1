@@ -12,6 +12,8 @@ Historique des modifications
 *******************************************************/
 
 import java.awt.BorderLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -34,6 +36,8 @@ public class FenetrePrincipale extends JFrame implements PropertyChangeListener 
 	private CreateurFormes cf;
 	private FenetreFormes ff;
 	private String linereceived;
+	private CommBase commBase;
+	private ConnexionServeur connexionserveur;
 
 	/**
 	 * Constructeur
@@ -51,14 +55,30 @@ public class FenetrePrincipale extends JFrame implements PropertyChangeListener 
 						// celle de ses composants
 		this.setVisible(true); // Rend la fenêtre principale visible.
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-	}
+		/*
+		this.addWindowListener(new WindowAdapter()
+		{
+			public void windowClosing(WindowEvent e)
+			{
+				if(commBase.isActif())
+					connexionserveur.deconnexionServeur();
+				System.exit(0);
+			}
+		});
+		*/
+		}
+		 
+	
 
 	// Appelé lorsque le sujet lance "firePropertyChanger"
 	@Override
 	public void propertyChange(PropertyChangeEvent arg0) {
-		if (arg0.getPropertyName().equals("ENVOIE-TEST") && arg0.getNewValue() instanceof Forme) {
-			Forme forme = (Forme) arg0.getNewValue();
-			ff.addForme(forme);
+		if (arg0.getPropertyName().equals("ENVOIE-TEST")) {
+			ff.addForme((Forme) arg0.getNewValue());
+		}
+		// Si l'argument recu est d'un bouton
+		if (arg0.getPropertyName().equals("button")) {
+			ff.Trier(arg0.getNewValue().toString());
 		}
 	}
 }

@@ -21,71 +21,58 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Decoder {
-	private String[] Split;
-	private String Match;
-	private int ID;
-	private int Data1;
-	private int Data2;
-	private int Data3;
-	private int Data4;
-	private String Forme;
-
-	public Decoder(String s) {
-		Match = s;
-		DataDecoder();
-	}
-
-	public void DataDecoder() {
+	private int id;
+	private String forme;
+	private String coordonne;
+	
+	/**
+	 * Constructeur de la reponse du serveur
+	 * @param Balise Reponse non traiter provenant du serveur
+	 */
+	public Decoder(String Balise)
+	{
+		//Definition de la facon dont la balise est constituer afin de sortir les informations
+		Pattern p = Pattern.compile("(.*) <(.*)> (.*) </\\2>");
+		Matcher m = p.matcher(Balise);
 		
-		// compilateur pour déterminer la forme que prendre la donnée du serveur
-		Pattern p = Pattern.compile("(\\d)+\\s<(.*)>(\\s(\\d)+)+");
-
-		Matcher m = p.matcher(Match);
-
-		// Si l'expression est trouvée
-		while (m.find()) {
-			// Divise l'information à chaque fois qu'il y a une espace
-			Split = m.group().split(" ");
-			// entre le nom de la forme sans les <> qui l'entoure
-			this.Split[1] = m.group(2);
-			// Convertit le String du ID en integer
-			ID = Integer.parseInt(Split[0]);
-			// l'ajout du nom sans <> dans sa variable
-			Forme = Split[1];
-			// ajout de l'information entrée
-			Data1 = Integer.parseInt(Split[2]);
-			Data2 = Integer.parseInt(Split[3]);
-			Data3 = Integer.parseInt(Split[4]);
-			// S'il y a une quatrième donnée, entrer cette information
-			if (Split.length == 6) {
-				Data4 = Integer.parseInt(Split[5]);
-			}
+		//Si le pattern correspont avec la balise, Les valeurs vont etre rajoute au variable de la classe
+		if(m.find())
+		{
+		id = Integer.parseInt(m.group(1));
+		forme = m.group(2);
+		coordonne = m.group(3);
 		}
+		
+		
+		
 	}
-
-	// getter des différentes information à être utiliser plus tard
-	public int getID() {
-		return ID;
+	
+	/**
+	 * Accesseur du numero de sequence
+	 * @return Retourne le numero de sequence en int
+	 */
+	public int getID()
+	{
+		return id;
 	}
-
-	public int getData1() {
-		return Data1;
+	/**
+	 * Accesseur du type de forme
+	 * @return Retourne le type de forme en string
+	 */
+	public String getTypeForme()
+	{
+		return forme;
 	}
-
-	public int getData2() {
-		return Data2;
+	/**
+	 * Accesseur des coordonnes
+	 * @return Retourne une string contenant les coordonnees, il ne s'agit pas encore d'un tableau
+	 */
+	public String getCoordonne()
+	{
+		return coordonne;
 	}
-
-	public int getData3() {
-		return Data3;
-	}
-
-	public int getData4() {
-		return Data4;
-	}
-
-	public String getForme() {
-		return Forme;
-	}
+	
+	
+	
 
 }
