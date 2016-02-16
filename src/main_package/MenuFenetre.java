@@ -1,14 +1,20 @@
 package main_package;
 /******************************************************
-Cours:  LOG121
-Projet: Squelette du laboratoire #1
-Nom du fichier: MenuFenetre.java
-Date créé: 2013-05-03
+Cours : LOG121
+Session : H2016
+Groupe : 01
+Projet : Laboratoire #1
+Étudiant(e)(s) : Laurent Dumont, Bach Nguyen Ngoc
+Code(s) perm. : DUML04059004, NGUB08049302	
+Professeur : Dominic St-Jacques
+Chargé de labo : Simon Robert
+Nom du fichier : MenuFenetre.java
+Date créé : 2016-01-12
+Date dern. modif. 2016-02-15
 *******************************************************
 Historique des modifications
 *******************************************************
-*@author Patrice Boucher
-2013-05-03 Version initiale
+2016-01-12 Version initiale
 *******************************************************/
 
 import java.awt.event.ActionEvent;
@@ -94,13 +100,14 @@ public class MenuFenetre extends JMenuBar {
 		ActionListener radioActionListener = new ActionListener() {
 			@SuppressWarnings("rawtypes")
 			public void actionPerformed(ActionEvent e) {
-				AbstractButton absButton = (AbstractButton) e.getSource();
+				final AbstractButton absButton = (AbstractButton) e.getSource();
 				threadComm = new SwingWorker(){
 					
 					@Override
 					protected Object doInBackground() throws Exception {
 						
 						if(listener!=null)
+							
 							firePropertyChange("button", null, absButton.getText()); //Donne la forme à  l'observateur	
 						
 						

@@ -9,7 +9,7 @@ Professeur : Dominic St-Jacques
 Chargé de labo : Simon Robert
 Nom du fichier : Circle.java
 Date créé : 2016-01-12
-Date dern. modif. 2016-01-19
+Date dern. modif. 2016-02-15
 *******************************************************
 Historique des modifications
 *******************************************************

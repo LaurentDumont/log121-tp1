@@ -1,3 +1,21 @@
+/******************************************************
+Cours : LOG121
+Session : H2016
+Groupe : 01
+Projet : Laboratoire #1
+Étudiant(e)(s) : Laurent Dumont, Bach Nguyen Ngoc
+Code(s) perm. : DUML04059004, NGUB08049302	
+Professeur : Dominic St-Jacques
+Chargé de labo : Simon Robert
+Nom du fichier : Oval.java
+Date créé : 2016-01-12
+Date dern. modif. 2016-02-15
+*******************************************************
+Historique des modifications
+*******************************************************
+2016-01-12 Version initiale
+*******************************************************/
+
 package Forme;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -34,7 +52,7 @@ public class Oval extends Forme {
 	}
 		
 	/**
-	* Permet de dessiner la forme dans la fenÃªtre principale.
+	* Permet de dessiner la forme dans la fenêtre principale.
 	* @param g
 	*/
 	public void draw(Graphics g){

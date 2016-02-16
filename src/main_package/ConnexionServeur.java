@@ -1,21 +1,21 @@
 package main_package;
 /******************************************************
-Cours:  LOG121
-Session: E2015
-Projet: Squelette du laboratoire #2
-Ã‰tudiant(e)s: Julien Lemonde, Alexandre Malo, Marc-Antoine Hebert, Jean-Michel Coupal
-
-Professeur : Francis Cardinal
-Nom du fichier: Connexion.java
-Date créé: 2015-05-03
+Cours : LOG121
+Session : H2016
+Groupe : 01
+Projet : Laboratoire #1
+Étudiant(e)(s) : Laurent Dumont, Bach Nguyen Ngoc
+Code(s) perm. : DUML04059004, NGUB08049302	
+Professeur : Dominic St-Jacques
+Chargé de labo : Simon Robert
+Nom du fichier : CreateurForme.java
+Date créé : 2016-01-12
+Date dern. modif. 2016-02-15
 *******************************************************
-Description de la classe
-Classe permettant la gestion et la communication avec 
-le serveur (Connexion, déconnexion, demande de forme, etc)
+Historique des modifications
 *******************************************************
-@author Julien Lemonde, Alexandre Malo, Marc-Antoine Hebert, Jean-Michel Coupal
-2015-05-03 Version initiale
-*******************************************************/  
+2016-01-12 Version initiale
+*******************************************************/ 
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -36,7 +36,8 @@ public class ConnexionServeur {
 	private static Socket client;
 	private static PrintWriter printwriter = null;
 	private static BufferedReader bufferedReader = null;
-	private static int recommencer;
+	private static int retry;
+
 	
 	/**
 	 * Permet la connexion au serveur incluant une gestion des erreurs
@@ -44,7 +45,7 @@ public class ConnexionServeur {
 	 * @param hostname Le nom d'hôte du serveur
 	 * @param port Le port du serveur
 	 */
-	public static void connexion(String hostname,int port){
+	public static void connexionServeur(String hostname,int port){
 	
 		//Tentative de connexion au serveur
 		try{
@@ -56,13 +57,13 @@ public class ConnexionServeur {
 		//----------- Si l'hostname n'existe pas -------------
 		catch (UnknownHostException e) 
 		{ 
-		      //Demande Ã  l'utilisateur s'il désir recommencer ou non
-		      recommencer = JOptionPane.showConfirmDialog(null,"Le nom d'hôte ''"+ hostname + "'' est introuvable. Voulez-vous spécifier un autre serveur ?", "Application Formes",JOptionPane.YES_NO_OPTION);		   		      
+		      //Demande à  l'utilisateur s'il veut recommencer
+		      retry = JOptionPane.showConfirmDialog(null,"Le nom d'hôte ''"+ hostname + "'' est introuvable. Voulez-vous spécifier un autre serveur ?", "Application Formes",JOptionPane.YES_NO_OPTION);		   		      
 		      System.out.println("Le nom d'hôte ''"+ hostname + "'' est introuvable");
 
-		      if(recommencer == 0) //recommencer == 0 si l'utilisateur veux recommencer
+		      if(retry == 0) //retry == 0 si l'utilisateur veux recommencer, sinon on quitte l'application
 		    	  nouvelleConnexion();
-		      else //sinon on quitte l'application
+		      else 
 		    	  System.exit(0); 		      	     
 		}//------------------------------------------------------
 		
@@ -71,11 +72,11 @@ public class ConnexionServeur {
 		//------- Si le port spécifié est hors de porté --------
 		catch (IllegalArgumentException e) 
 		{
-		      //Demande Ã  l'utilisateur s'il désir recommencer ou non
-		      recommencer = JOptionPane.showConfirmDialog(null,"Le port numéro : "+ port + ", est hors de porté. Voulez-vous spécifier un autre port ?", "Application Formes",JOptionPane.YES_NO_OPTION);		   		      
+		      //Demande à l'utilisateur s'il veut recommencer ou non
+		      retry = JOptionPane.showConfirmDialog(null,"Le port numéro : "+ port + ", est hors de porté. Voulez-vous spécifier un autre port ?", "Application Formes",JOptionPane.YES_NO_OPTION);		   		      
 		      System.out.println("Le port numéro ''"+ port + "'' est hors de porté");
 
-		      if(recommencer == 0) //recommencer == 0 si l'utilisateur veux recommencer
+		      if(retry == 0) //recommencer == 0 si l'utilisateur veux recommencer
 		    	  nouvelleConnexion();
 		      else //sinon on quitte l'application
 		    	  System.exit(0); 		      	     
@@ -87,10 +88,10 @@ public class ConnexionServeur {
 		catch (IOException e) 
 		{ 
 		      //Demande Ã  l'utilisateur s'il désir recommencer ou non
-		      recommencer = JOptionPane.showConfirmDialog(null,"Le serveur ne répond pas Ã  l'adresse suivante: ''"+ hostname + ":" + port + "''. Voulez-vous spécifier un autre serveur:port ?", "Application Formes",JOptionPane.YES_NO_OPTION);		     		      
+		      retry = JOptionPane.showConfirmDialog(null,"Le serveur ne répond pas Ã  l'adresse suivante: ''"+ hostname + ":" + port + "''. Voulez-vous spécifier un autre serveur:port ?", "Application Formes",JOptionPane.YES_NO_OPTION);		     		      
 		      System.out.println("Le serveur n'est pas démarré ");
 
-		      if(recommencer == 0) //recommencer == 0 si l'utilisateur veux recommencer
+		      if(retry == 0) //recommencer == 0 si l'utilisateur veux recommencer
 		    	  nouvelleConnexion();
 		      else //sinon on quitte l'application
 		    	  System.exit(0); 
@@ -133,12 +134,31 @@ public class ConnexionServeur {
 	 */
 	private static void nouvelleConnexion() {
 		String NomDeServeur = JOptionPane.showInputDialog("Quel est l'adresse du serveur?","localhost:10000");
-		
+		if (DecortiqueurTexte.decortiqueur(NomDeServeur)){
 		String [] serveur = NomDeServeur.split(":"); //Sépare la chaine de caractère afin de récupérer le nom d'hôte et le port
 		String hostname = serveur[0]; //Assigne le hostname
 		int port = Integer.parseInt(serveur[1]); //Assigne le port
-		
-		connexion(hostname,port);		
+		connexionServeur(hostname,port);
+		}
+		else {
+			nouvelleConnexion();
+		}
 	}
 	
+public static int getRetry() {
+		
+		return retry;
+	
+	}
+	
+	/**
+	 * Permet de changer la valeur de la variable retry.
+	 * @param retry
+	 */
+	
+	public static void setRetry(int retry) {
+		
+		ConnexionServeur.retry = retry;
+	
+	}
 }

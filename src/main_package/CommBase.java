@@ -3,7 +3,7 @@ package main_package;
 Cours:  LOG121
 Session: E2015
 Projet: Squelette du laboratoire #2
-Ã‰tudiant(e)s: Julien Lemonde, Alexandre Malo, Marc-Antoine Hebert, Jean-Michel Coupal
+Ã‰tudiant(e)s: Bach Nguyen-Ngoc, Laurent Dumont
 
 Professeur : Francis Cardinal
 Nom du fichier: CommBase.java
@@ -11,15 +11,10 @@ Date créé: 2015-05-03
 *******************************************************
 Description de la classe
 Base d'une communication via un fil d'exécution parallèle.
-*******************************************************
-@author Patrice Boucher
- @Modification Julien Lemonde, Alexandre Malo, Marc-Antoine Hebert, Jean-Michel Coupal
- @date 2013/05/04
-*******************************************************/ 
+********************************************************/
 
 import java.beans.PropertyChangeListener;
 
-import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
 import Forme.Forme;
@@ -28,15 +23,11 @@ import Forme.CreateurFormes;
 
 public class CommBase {
 	
-	private String input ;
 	private final int DELAI = 50;
 	@SuppressWarnings("rawtypes")
 	private SwingWorker threadComm =null;
 	private PropertyChangeListener listener = null;
 	private static boolean isActif = false;
-	private String hostname;
-	private int port;
-	private CreateurFormes cf;
 	
 	/**
 	 * Constructeur de base
@@ -45,7 +36,7 @@ public class CommBase {
 	
 	/**
 	 * Définir le récepteur de l'information reçue dans la communication avec le serveur
-	 * @param listener sera alerté lors de l'appel de "firePropertyChanger" par le SwingWorker
+	 * listener sera alerté lors de l'appel de "firePropertyChanger"
 	 */
 	public void setPropertyChangeListener(PropertyChangeListener listener){
 		this.listener = listener;
@@ -55,14 +46,11 @@ public class CommBase {
 	 * Démarre la communication avec le serveur
 	 */
 	public void start(){
-		input = JOptionPane.showInputDialog("Quel est le nom d'hôte et le port du serveur de formes?","localhost:10000");
-		
-		String [] infoServeur = input.split(":"); //Sépare la saisie de l'utilisateur afin de récupérer le nom d'hÃ´te et le port
-		hostname = infoServeur[0]; //Assigne le hostname
-		port = Integer.parseInt(infoServeur[1]); //Assigne le port
-		ConnexionServeur.connexion(hostname,port); //Lance la connexion avec le serveur
-		isActif = true;
-		creerCommunication();
+		// Lance la connexion avec le serveur
+				ConnexionServeur.connexionServeur(DecortiqueurTexte.getNomServeur(), DecortiqueurTexte.getPortServeur());
+				if (ConnexionServeur.getRetry() == 0) {
+					creerCommunication();
+				}
 	}
 	
 	/**
@@ -92,7 +80,7 @@ public class CommBase {
 			protected Object doInBackground() throws Exception {
 				System.out.println("Le fils d'exécution parallèle est lancé !");
 				
-				// C'EST DANS CETTE BOUCLE QU'ON COMMUNIQUE AVEC LE SERVEUR
+				// Boucle qui recevra les 10 formes et les stockera
 				int index = 0 ;
 				while(true && index < 10){
 					

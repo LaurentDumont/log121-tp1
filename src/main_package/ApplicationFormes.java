@@ -1,18 +1,24 @@
 package main_package;
 /******************************************************
-Cours:  LOG121
-Projet: Squelette du laboratoire #1
-Nom du fichier: ApplicationFormes.java
-Date crÃ©Ã©: 2013-05-03
+Cours : LOG121
+Session : H2016
+Groupe : 01
+Projet : Laboratoire #1
+Étudiant(e)(s) : Laurent Dumont, Bach Nguyen Ngoc
+Code(s) perm. : DUML04059004, NGUB08049302	
+Professeur : Dominic St-Jacques
+Chargé de labo : Simon Robert
+Nom du fichier : ApplicationFormes.java
+Date créé : 2016-01-12
+Date dern. modif. 2016-02-15
 *******************************************************
 Historique des modifications
 *******************************************************
-*@author Patrice Boucher
-2013-05-03 Version initiale
+2016-01-12 Version initiale
 *******************************************************/
 
 /**
- * Cette classe reprÃ©sente l'application dans son ensemble. 
+ * Cette classe représente l'application dans son ensemble. 
  * @author Patrice Boucher
  * @date 2013/05/04
  */

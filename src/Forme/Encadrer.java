@@ -1,19 +1,18 @@
 /******************************************************
 Cours:  LOG121
-Session: E2015
-Projet: Squelette du laboratoire #2
-Ã‰tudiant(e)s: Julien Lemonde, Alexandre Malo, Marc-Antoine Hebert, Jean-Michel Coupal
-
-Professeur : Francis Cardinal
+Session: H2016
+Projet: laboratoire #2
+Étudiant(e)s: Laurent Dumont, Bach Nguyen-Ngoc
+Professeur : Dominic St-Jacques
 Nom du fichier: Encadrer.java
-Date crÃ©Ã©: 2015-06-01
+Date créé: 2016-02-11
 *******************************************************
 Description de la classe
-Classe qui va creer un objet de type Rectangle selon les 
+Classe qui va créer un objet de type Rectangle selon les 
 parametres recus et qui va donc permettre de dessiner 
 un rectangle dans la fenetre principale.
 *******************************************************
-*@author Julien Lemonde, Alexandre Malo, Marc-Antoine Hebert, Jean-Michel Coupal
+*@author Bach Nguyen-Ngoc, Laurent Dumont
 2015-06-01 Version initiale
 *******************************************************/ 
 package Forme;
