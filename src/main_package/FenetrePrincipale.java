@@ -53,6 +53,8 @@ public class FenetrePrincipale extends JFrame implements PropertyChangeListener 
 		JMenuBar menu = new MenuFenetre(comm);
 		this.setLayout(new BorderLayout());
 		this.add(menu, BorderLayout.NORTH);
+		// Ajoute le listener
+		((MenuFenetre)menu).setPropertyChangeListener(this);
 		ff = new FenetreFormes();
 		this.add(ff, BorderLayout.CENTER); // Ajoute la fenêtre de
 											// forme à la fenètre
