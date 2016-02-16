@@ -59,12 +59,14 @@ public class Rectangle extends Forme {
 	}
 	/**
 	 * Accesseur de l'encadrer de la forme rectangle
+	 * @return Encadre
 	 */
 	public Encadrer getEncadree(){
 		return this.Encadre;
 	}
 	/**
 	 * Methode pour calculer l'aire du rectangle
+	 * @return l'aire du rectangle
 	 */
 	public double calculeAire()
 	{
@@ -91,13 +93,14 @@ public class Rectangle extends Forme {
 	}
 	/**
 	 * Accesseur du numero de sequence
+	 * @return numSeq le numero de sequence du rectangle
 	 */
 	public int getNumSeq() {
 		return numSeq;
 	}
 	/**
 	 * Retourne un int unique contenant le type de forme et le numero de sequence 2 pour rectangle
-	 * @return Numero unique d'identification des formes
+	 * @return forme du rectangle en int
 	 */
 	public int getTypeForme(){
 		return 200000 + numSeq;

@@ -56,7 +56,7 @@ public class Encadrer extends Forme{
 	
 	/**
 	* Permet de dessiner la forme dans la fenêtre principale.
-	* @param g
+	* @param graphics g
 	*/
 	public void draw(Graphics g){
 		Graphics2D g2 = (Graphics2D)g;

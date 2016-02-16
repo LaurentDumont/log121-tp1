@@ -13,6 +13,8 @@ public abstract class Forme implements InterfaceForme {
 	protected String nomForme; 
 	
 	public void draw(Graphics g) {}
+	
+	
 }
 	
 	

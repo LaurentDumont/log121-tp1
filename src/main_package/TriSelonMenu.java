@@ -186,11 +186,6 @@ Forme formeAVerifier;
 double ValeurATrie;
 double ValeurAVerifier;
 
-
-
-
-
-
 while(listATriee.nbElement!=0){
 	formeATrie = (Forme) listATriee.defile();
 	

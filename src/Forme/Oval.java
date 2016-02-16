@@ -85,19 +85,21 @@ public class Oval extends Forme {
 	}
 	/**
 	 * Accesseur de l'encadrer
+	 * @return Encadre
 	 */
 	public Encadrer getEncadree() {
 		return this.Encadre;
 	}
 	/**
 	 * Accesseur du numero de sequence de l'ovale
+	 * @return numseq Le numero de sequence de l'ovale
 	 */
 	public int getNumSeq() {
 		return numSeq;
 	}
 	/**
 	 * Retourne un int unique contenant le type de forme et le numero de sequence 4 pour ovale
-	 * @return Numero unique d'identification des formes
+	 * @return forme d'oval en int
 	 */
 	public int getTypeForme(){
 		return 400000 + numSeq;

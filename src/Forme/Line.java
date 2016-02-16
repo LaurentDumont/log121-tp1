@@ -55,7 +55,7 @@ public class Line extends Forme {
 		
 	/**
 	* Permet de dessiner la forme dans la fenêtre principale.
-	* @param g
+	* @param g graphics
 	*/
 	public void draw(Graphics g){		
 		g.setColor(Color.GREEN);
@@ -63,12 +63,13 @@ public class Line extends Forme {
 	}
 	/**
 	 * Calcule l'aire de la ligne
+	 * @return l'aire d'une ligne
 	 */
 	public double calculeAire()
 	{
 		
 		double distance = Math.sqrt(Math.pow(x2-x1, 2) + Math.pow(y2-y1, 2));
-		return 1 * distance;
+		return distance;
 	}
 	
 	/**
@@ -107,19 +108,21 @@ public class Line extends Forme {
 	
 	/**
 	 * Accesseur de l'encadrer pour les lignes
+	 * @return encadre
 	 */
 	public Encadrer getEncadree() {
 		return this.Encadre;
 	}
 	/**
 	 * Accesseur du numero de sequence
+	 * @return numSeq le numero de sequence
 	 */
 	public int getNumSeq() {
 		return numSeq;
 	}
 	/**
 	 * Retourne un int unique contenant le type de forme et le numero de sequence 5 pour ligne
-	 * @return Numero unique d'identification des formes
+	 * @return forme du ligne en int
 	 */
 	public int getTypeForme(){
 		return 500000 + numSeq;

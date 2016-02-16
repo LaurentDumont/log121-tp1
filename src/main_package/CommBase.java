@@ -37,6 +37,7 @@ public class CommBase {
 	/**
 	 * Définir le récepteur de l'information reçue dans la communication avec le serveur
 	 * listener sera alerté lors de l'appel de "firePropertyChanger"
+	 * @param listener un actionlistener
 	 */
 	public void setPropertyChangeListener(PropertyChangeListener listener){
 		this.listener = listener;

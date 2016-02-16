@@ -28,7 +28,11 @@ public class DecortiqueurTexte {
 	private static String nomServeur = null;
 	private static int portServeur = 0;
 			
-			
+	/**
+	 * Méthode qui s'assure que le nom entré par l'utilisateur suit les normes
+	 * @param StringServeur le texte entré par l'utilisateur
+	 * @return boolean si ce que l'utilisateur a entré suit les normes ou non
+	 */		
 	public static boolean decortiqueur(String stringServeur) {
 		Pattern p = Pattern.compile("(.*):\\d");
 		Matcher m = p.matcher(stringServeur);
@@ -43,6 +47,10 @@ public class DecortiqueurTexte {
 
 		return false;
 		}
+	/**
+	 * 
+	 * @return nomServeur le nom du serveur
+	 */
 	public static String getNomServeur() {
 		
 		return nomServeur;

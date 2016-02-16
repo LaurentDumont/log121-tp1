@@ -27,7 +27,7 @@ public class Circle extends Forme {
 	
 	private int x;
 	private int y;
-	private int rayon;
+	private int radius;
 	private Encadrer Encadre;
 	
 	/**
@@ -40,12 +40,12 @@ public class Circle extends Forme {
 		nomForme = reponseRecu.getTypeForme();
 		x = Integer.parseInt(tabCoord[0]);
 		y = Integer.parseInt(tabCoord[1]);
-		rayon = Integer.parseInt(tabCoord[2]);
+		radius = Integer.parseInt(tabCoord[2]);
 		String[] temp = new String[4];
-		temp[0] = String.valueOf((Integer.parseInt(tabCoord[0])) - (this.rayon/2));
-		temp[1] = String.valueOf((Integer.parseInt(tabCoord[1])) - (this.rayon/2));
-		temp[2] = String.valueOf((Integer.parseInt(tabCoord[0])) + (this.rayon/2));
-		temp[3] = String.valueOf((Integer.parseInt(tabCoord[1])) + (this.rayon/2));
+		temp[0] = String.valueOf((Integer.parseInt(tabCoord[0])) - (this.radius/2));
+		temp[1] = String.valueOf((Integer.parseInt(tabCoord[1])) - (this.radius/2));
+		temp[2] = String.valueOf((Integer.parseInt(tabCoord[0])) + (this.radius/2));
+		temp[3] = String.valueOf((Integer.parseInt(tabCoord[1])) + (this.radius/2));
 		this.Encadre = new Encadrer(temp);
 	}
 
@@ -55,17 +55,18 @@ public class Circle extends Forme {
 	*/
 	public void draw(Graphics g){ 		
 		g.setColor(Color.BLUE);
-		g.fillOval(x,y,rayon,rayon);
+		g.fillOval(x,y,radius,radius);
 	}
 	/**
 	 * Methode pour calculer l'aire du cercle
 	 */
 	public double calculeAire()
 	{
-		return Math.PI * Math.pow(rayon/2, 2);
+		return Math.PI * Math.pow(radius/2, 2);
 	}
 	/**
 	 * Accesseur pour changer la position de la forme
+	 * @param int x, int y
 	 */
 	public void setPosition(int x, int y) {
 		this.x = x;
@@ -81,6 +82,7 @@ public class Circle extends Forme {
 	}
 	/**
 	 * Retourne le numero de sequence
+	 * @return Numéro Séquence
 	 */
 	public int getNumSeq() {
 		return numSeq;
@@ -95,7 +97,7 @@ public class Circle extends Forme {
 	}
 	/**
 	 * Retourne un int unique contenant le type de forme et le numero de sequence 3 pour cercle
-	 * @return Numero unique d'identification des formes
+	 * @return forme du cercle en int
 	 */
 	public int getTypeForme(){
 		return 300000 + numSeq;

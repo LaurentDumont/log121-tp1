@@ -44,6 +44,7 @@ public class ConnexionServeur {
 	 * 
 	 * @param hostname Le nom d'hôte du serveur
 	 * @param port Le port du serveur
+	 * 
 	 */
 	public static void connexionServeur(String hostname,int port){
 	
@@ -54,7 +55,7 @@ public class ConnexionServeur {
 			bufferedReader = new BufferedReader(new InputStreamReader(client.getInputStream()));			
 		} 
 		
-		//----------- Si l'hostname n'existe pas -------------
+		// Si l'hostname n'existe pas 
 		catch (UnknownHostException e) 
 		{ 
 		      //Demande à  l'utilisateur s'il veut recommencer
@@ -65,11 +66,11 @@ public class ConnexionServeur {
 		    	  nouvelleConnexion();
 		      else 
 		    	  System.exit(0); 		      	     
-		}//------------------------------------------------------
+		}
 		
 		
 		
-		//------- Si le port spécifié est hors de porté --------
+		//Si le port spécifié est hors de porté
 		catch (IllegalArgumentException e) 
 		{
 		      //Demande à l'utilisateur s'il veut recommencer ou non
@@ -80,11 +81,11 @@ public class ConnexionServeur {
 		    	  nouvelleConnexion();
 		      else //sinon on quitte l'application
 		    	  System.exit(0); 		      	     
-		}//-------------------------------------------------------
+		}
 		
 		
 		
-		//---- Si le serveur ne répond pas ou si le port est mauvais ----
+		// Si le serveur ne répond pas ou si le port est mauvais 
 		catch (IOException e) 
 		{ 
 		      //Demande Ã  l'utilisateur s'il désir recommencer ou non
@@ -95,7 +96,7 @@ public class ConnexionServeur {
 		    	  nouvelleConnexion();
 		      else //sinon on quitte l'application
 		    	  System.exit(0); 
-		 }//-------------------------------------------------------
+		 }
 	}
 
 	/**
@@ -129,7 +130,7 @@ public class ConnexionServeur {
 	
 	
 	/**
-	 * Méthode pour retenter la connexion avec le serveur lorsque 
+	 * Méthode pour essayer une nouvelle connexion avec le serveur lorsque 
 	 * l'utilisateur demande de le faire
 	 */
 	private static void nouvelleConnexion() {
@@ -145,7 +146,11 @@ public class ConnexionServeur {
 		}
 	}
 	
-public static int getRetry() {
+	/**
+	 * 
+	 * @return retry Si l'utilisateur reessaie ou non (1 ou 0)
+	 */
+	public static int getRetry() {
 		
 		return retry;
 	

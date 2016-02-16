@@ -63,6 +63,7 @@ public class Square extends Forme {
 
 	/**
 	 * Methode pour calculer l'aire selon la forme
+	 * @return l'aire du carree
 	 */
 	public double calculeAire() {
 		return ((x2 - x1) * (y2 - y1));
@@ -70,6 +71,7 @@ public class Square extends Forme {
 
 	/**
 	 * Retourne l'encadrer de la forme
+	 * return Encadre
 	 */
 	public Encadrer getEncadree() {
 		return this.Encadre;
@@ -89,7 +91,7 @@ public class Square extends Forme {
 	/**
 	 * Obtient la grande diagonale de l'encadrer
 	 * 
-	 * @return Retourne la valeur en Double de la longueur de la diagonale
+	 * @return Retourne la valeur de la longueur de la diagonale
 	 */
 	public double getDiagonale() {
 		return this.Encadre.getDiagonale();
@@ -103,10 +105,10 @@ public class Square extends Forme {
 	}
 
 	/**
-	 * Retourne un int unique qui comprend le type de forme 1 pour carrer et le
+	 * Retourne un int unique du carree et le
 	 * numero de sequence
 	 * 
-	 * @return
+	 * @return le type de forme du Carree en Int
 	 */
 	public int getTypeForme() {
 		return 100000 + numSeq;

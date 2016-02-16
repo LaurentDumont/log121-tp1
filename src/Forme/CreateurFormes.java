@@ -27,7 +27,7 @@ public class CreateurFormes {
 	/**
 	 * Methode static qui va prendre la forme du serveur et en crée une a partir des classes formes
 	 * @param reponseServeurTraite Classe contenant la forme traiter par le serveur
-	 * @return Une forme selon les parametres
+	 * @return Forme
 	 */
 	public static Forme creerForme(Decoder reponseServeurTraite){
 		
